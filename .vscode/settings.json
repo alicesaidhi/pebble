@@ -1,4 +1,16 @@
 {
 	"luau-lsp.sourcemap.rojoProjectFile": "test.project.json",
-	"luau-lsp.completion.imports.requireStyle": "alwaysRelative"
+	"luau-lsp.completion.imports.requireStyle": "alwaysRelative",
+	"luau-lsp.fflags.override": {
+    "LuauTypeInferIterationLimit": "0",
+    "LuauCheckRecursionLimit": "0",
+    "LuauTypeInferRecursionLimit": "0",
+    "LuauTarjanChildLimit": "0",
+    "LuauTypeInferTypePackLoopLimit": "0",
+    "LuauVisitRecursionLimit": "0",
+    "LuauParseDeclareClassIndexer": "true",
+    "LuauLoopControlFlowAnalysis": "true"
+  }
+
+
 }
