@@ -20,7 +20,7 @@ type rounded_frame = {
 
 	color: can<Color3>?,
 
-	layout: vide.vFrame,
+	layout: vide.vFrame?,
 
 	[number]: Instance,
 }
@@ -112,7 +112,7 @@ local function rounded_frame(props: rounded_frame)
 				return UDim2.new(
 					1, 0,
 					0.5 + read(topright).Scale / 2 - read(bottomright).Scale / 2,
-					0 + read(topright).Offset - read(bottomright).Offset
+					0 + read(topright).Offset / 2 - read(bottomright).Offset / 2
 				)
 			end,
 			AnchorPoint = Vector2.new(1, 0.5),
