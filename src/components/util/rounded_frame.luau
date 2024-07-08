@@ -13,6 +13,11 @@ local read = vide.read
 
 type can<T> = T | () -> T
 type rounded_frame = {
+	name: can<string>?,
+	size: can<UDim2>?,
+	position: can<UDim2>?,
+	anchor_point: can<Vector2>?,
+
 	topleft: can<UDim>?,
 	topright: can<UDim>?,
 	bottomleft: can<UDim>?,
@@ -63,109 +68,118 @@ local function rounded_frame(props: rounded_frame)
 
 	return create "Frame" {
 
-		Name = "RoundedFrame",
+		Name = props.name or "RoundedFrame",
+		Size = props.size,
+		Position = props.position,
+		AnchorPoint = props.anchor_point,
+
+		BackgroundColor3 = props.color,
 
 		BackgroundTransparency = 1,
 
-		corner("TopLeft", UDim2.fromScale(0, 0), Vector2.new(0, 0), topleft),
-		corner("TopRight", UDim2.fromScale(1, 0), Vector2.new(1, 0), topright),
-		corner("BottomLeft", UDim2.fromScale(0, 1), Vector2.new(0, 1), bottomleft),
-		corner("BottomRight", UDim2.fromScale(1, 1), Vector2.new(1, 1), bottomright),
+		create "Folder" {
+			Name = "Corner",
+			
+			corner("TopLeft", UDim2.fromScale(0, 0), Vector2.new(0, 0), topleft),
+			corner("TopRight", UDim2.fromScale(1, 0), Vector2.new(1, 0), topright),
+			corner("BottomLeft", UDim2.fromScale(0, 1), Vector2.new(0, 1), bottomleft),
+			corner("BottomRight", UDim2.fromScale(1, 1), Vector2.new(1, 1), bottomright),
 		
-		create "Frame" {
-			
-			Name = "FrameLeft",
+			create "Frame" {
+				
+				Name = "FrameLeft",
 
-			Size = function()
-				return UDim2.new(
-					0.5,
-					0,
-					1 - read(topleft).Scale - read(bottomleft).Scale,
-					- (read(topleft).Offset + read(bottomleft).Offset)
-				)
-			end,
-			Position = function()
-				return UDim2.new(
-					0, 0,
-					0.5 + read(topleft).Scale / 2 - read(bottomleft).Scale / 2,
-					0 + read(topleft).Offset / 2 - read(bottomleft).Offset / 2
-				)
-			end,
-			AnchorPoint = Vector2.new(0, 0.5),
+				Size = function()
+					return UDim2.new(
+						0.5,
+						0,
+						1 - read(topleft).Scale - read(bottomleft).Scale,
+						- (read(topleft).Offset + read(bottomleft).Offset)
+					)
+				end,
+				Position = function()
+					return UDim2.new(
+						0, 0,
+						0.5 + read(topleft).Scale / 2 - read(bottomleft).Scale / 2,
+						0 + read(topleft).Offset / 2 - read(bottomleft).Offset / 2
+					)
+				end,
+				AnchorPoint = Vector2.new(0, 0.5),
 
-			BackgroundColor3 = props.color,
-		},
+				BackgroundColor3 = props.color,
+			},
 
-		create "Frame" {
-			
-			Name = "FrameRight",
+			create "Frame" {
+				
+				Name = "FrameRight",
 
-			Size = function()
-				return UDim2.new(
-					0.5,
-					0,
-					1 - read(topright).Scale - read(bottomright).Scale,
-					- (read(topright).Offset + read(bottomright).Offset)
-				)
-			end,
-			Position = function()
-				return UDim2.new(
-					1, 0,
-					0.5 + read(topright).Scale / 2 - read(bottomright).Scale / 2,
-					0 + read(topright).Offset / 2 - read(bottomright).Offset / 2
-				)
-			end,
-			AnchorPoint = Vector2.new(1, 0.5),
+				Size = function()
+					return UDim2.new(
+						0.5,
+						0,
+						1 - read(topright).Scale - read(bottomright).Scale,
+						- (read(topright).Offset + read(bottomright).Offset)
+					)
+				end,
+				Position = function()
+					return UDim2.new(
+						1, 0,
+						0.5 + read(topright).Scale / 2 - read(bottomright).Scale / 2,
+						0 + read(topright).Offset / 2 - read(bottomright).Offset / 2
+					)
+				end,
+				AnchorPoint = Vector2.new(1, 0.5),
 
-			BackgroundColor3 = props.color,
-		},
+				BackgroundColor3 = props.color,
+			},
 
-		create "Frame" {
-			
-			Name = "FrameTop",
+			create "Frame" {
+				
+				Name = "FrameTop",
 
-			Size = function()
-				return UDim2.new(
-					1 - read(topleft).Scale - read(topright).Scale,
-					- (read(topleft).Offset + read(topright).Offset),
-					0.5,
-					0
-				)
-			end,
-			Position = function()
-				return UDim2.new(
-					0.5 + read(topleft).Scale / 2 - read(topright).Scale / 2,
-					0 + read(topleft).Offset / 2 - read(topright).Offset / 2,
-					0, 0
-				)
-			end,
-			AnchorPoint = Vector2.new(0.5, 0),
+				Size = function()
+					return UDim2.new(
+						1 - read(topleft).Scale - read(topright).Scale,
+						- (read(topleft).Offset + read(topright).Offset),
+						0.5,
+						0
+					)
+				end,
+				Position = function()
+					return UDim2.new(
+						0.5 + read(topleft).Scale / 2 - read(topright).Scale / 2,
+						0 + read(topleft).Offset / 2 - read(topright).Offset / 2,
+						0, 0
+					)
+				end,
+				AnchorPoint = Vector2.new(0.5, 0),
 
-			BackgroundColor3 = props.color,
-		},
+				BackgroundColor3 = props.color,
+			},
 
-		create "Frame" {
-			
-			Name = "FrameBottom",
+			create "Frame" {
+				
+				Name = "FrameBottom",
 
-			Size = function()
-				return UDim2.new(
-					1 - read(bottomleft).Scale - read(bottomright).Scale,
-					- (read(bottomleft).Offset + read(bottomright).Offset),
-					0.5,
-					0
-				)
-			end,
-			Position = function()
-				return UDim2.new(
-					0.5 + read(bottomleft).Scale / 2 - read(bottomright).Scale / 2,
-					0 + read(bottomleft).Offset / 2 - read(bottomright).Offset / 2,
-					1, 0
-				)
-			end,
-			AnchorPoint = Vector2.new(0.5, 1),
+				Size = function()
+					return UDim2.new(
+						1 - read(bottomleft).Scale - read(bottomright).Scale,
+						- (read(bottomleft).Offset + read(bottomright).Offset),
+						0.5,
+						0
+					)
+				end,
+				Position = function()
+					return UDim2.new(
+						0.5 + read(bottomleft).Scale / 2 - read(bottomright).Scale / 2,
+						0 + read(bottomleft).Offset / 2 - read(bottomright).Offset / 2,
+						1, 0
+					)
+				end,
+				AnchorPoint = Vector2.new(0.5, 1),
 
-			BackgroundColor3 = props.color,
+				BackgroundColor3 = props.color,
+			},
 		},
 
 		container {

@@ -11,14 +11,13 @@ chroma is a value between 0 to infinity, determining how colorful something is.
 current displays can only display a chroma up to around 0.34, and srgb can only
 go up to 0.245.
 
-hue is just the hue circle.
-
+hue is a hue circle from 0-360
 
 
 ]=]
 local function oklch(lightness: number, chroma: number, hue: number)
 	return oklab.linear_srgb_to_color3(
-		oklab.oklab_to_linear_srgb(oklab.oklch_to_oklab(Vector3.new(lightness, chroma, hue / 360))),
+		oklab.oklab_to_linear_srgb(oklab.oklch_to_oklab(Vector3.new(lightness, chroma, hue))),
 		true
 	)
 end

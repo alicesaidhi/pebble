@@ -15,28 +15,28 @@ local function color(props)
 	return create "Frame" {
 
 		BackgroundColor3 = function()
-			local lab = oklab.oklch_to_oklab(props.color() * Vector3.new(1, 1, 1/360))
+			local lab = oklab.oklch_to_oklab(props.color())
 			local srgb = oklab.oklab_to_linear_srgb(lab)
 			return oklab.linear_srgb_to_color3(srgb)
 		end,
 
-		create "TextLabel" {
+		-- create "TextLabel" {
 			
-			Size = UDim2.new(1, 0, 0, 24),
-			Position = UDim2.fromScale(0, 1),
-			AnchorPoint = Vector2.new(0, 1),
+		-- 	Size = UDim2.new(1, 0, 0, 24),
+		-- 	Position = UDim2.fromScale(0, 1),
+		-- 	AnchorPoint = Vector2.new(0, 1),
 
-			BackgroundTransparency = 1,
+		-- 	BackgroundTransparency = 1,
 
-			TextSize = 14,
-			Font = Enum.Font.GothamBold,
-			TextColor3 = function()
-				return oklch(math.round(1 - props.color().X), 0, 0)
-			end,
-			Text = function()
-				return string.format("%.4g, %.4g, %.4g", props.color().X, props.color().Y, props.color().Z)
-			end
-		},
+		-- 	TextSize = 14,
+		-- 	Font = Enum.Font.GothamBold,
+		-- 	TextColor3 = function()
+		-- 		return oklch(math.round(1 - props.color().X), 0, 0)
+		-- 	end,
+		-- 	Text = function()
+		-- 		return string.format("%.4g, %.4g, %.4g", props.color().X, props.color().Y, props.color().Z)
+		-- 	end
+		-- },
 
 		create "UICorner" {
 			CornerRadius = UDim.new(0, 8)
@@ -55,7 +55,7 @@ return function(target)
 
 			local instances = {}
 
-			for i = 0, 325, 45 do
+			for i = 0, 1, 0.01 do
 				table.insert(instances, color {
 					color = source(Vector3.new(lightness, chroma, i))
 				})
@@ -71,7 +71,7 @@ return function(target)
 					HorizontalFlex = Enum.UIFlexAlignment.Fill,
 					VerticalFlex = Enum.UIFlexAlignment.Fill,
 					FillDirection = Enum.FillDirection.Horizontal,
-					Padding = UDim.new(0, 8)
+					Padding = UDim.new(0, -16)
 				},
 
 				instances
@@ -88,6 +88,8 @@ return function(target)
 
 			sheets(0.1, 0.05),
 			sheets(0.05, 0.05),
+			sheets(0.7, 0.4),
+			sheets(0.2, 0.2),
 
 		}
 

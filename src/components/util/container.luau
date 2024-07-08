@@ -8,7 +8,7 @@ local vide = require(script.Parent.Parent.Parent.Parent.vide)
 
 local create = vide.create
 
-local function container(props)
+local function container(props: vide.vFrame)
 	return create "Frame" {
 
 		Name = "Container",
