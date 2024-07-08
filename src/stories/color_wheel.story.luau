@@ -1,4 +1,5 @@
 local vide = require(script.Parent.Parent.Parent.vide)
+local apcaw3 = require(script.Parent.Parent.libraries.apcaw3)
 local oklab = require(script.Parent.Parent.libraries.oklab)
 local oklch = require(script.Parent.Parent.util.oklch)
 
@@ -20,23 +21,24 @@ local function color(props)
 			return oklab.linear_srgb_to_color3(srgb)
 		end,
 
-		-- create "TextLabel" {
+		create "TextLabel" {
 			
-		-- 	Size = UDim2.new(1, 0, 0, 24),
-		-- 	Position = UDim2.fromScale(0, 1),
-		-- 	AnchorPoint = Vector2.new(0, 1),
+			Size = UDim2.new(1, 0, 0, 24),
+			Position = UDim2.fromScale(0, 1),
+			AnchorPoint = Vector2.new(0, 1),
 
-		-- 	BackgroundTransparency = 1,
+			BackgroundTransparency = 1,
 
-		-- 	TextSize = 14,
-		-- 	Font = Enum.Font.GothamBold,
-		-- 	TextColor3 = function()
-		-- 		return oklch(math.round(1 - props.color().X), 0, 0)
-		-- 	end,
-		-- 	Text = function()
-		-- 		return string.format("%.4g, %.4g, %.4g", props.color().X, props.color().Y, props.color().Z)
-		-- 	end
-		-- },
+			TextSize = 14,
+			Font = Enum.Font.GothamBold,
+			TextColor3 = function()
+				return oklch(math.round(1 - props.color().X), 0, 0)
+			end,
+			Text = function()
+				local color = oklch(props.color().X, props.color().Y, props.color().Z)
+				return math.round(apcaw3.calcAPCA(Color3.new(1, 1, 1), color) * 10) / 10
+			end
+		},
 
 		create "UICorner" {
 			CornerRadius = UDim.new(0, 8)
@@ -55,7 +57,7 @@ return function(target)
 
 			local instances = {}
 
-			for i = 0, 1, 0.01 do
+			for i = 0, 1, 0.1 do
 				table.insert(instances, color {
 					color = source(Vector3.new(lightness, chroma, i))
 				})
