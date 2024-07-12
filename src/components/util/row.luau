@@ -1,6 +1,6 @@
 --[[
 
-Creates a container used to fill items in a row.
+Creates a container for a list of elements.
 
 ]]
 
@@ -8,29 +8,42 @@ local vide = require(script.Parent.Parent.Parent.Parent.vide)
 local container = require(script.Parent.container)
 
 local create = vide.create
+local read = vide.read
 
-type can<T> = T | () -> T
+type can<T> = (() -> T) | T
 type layout = {
-	list: vide.vUIListLayout?,
-	layout: vide.vFrame?,
+	
+	justifycontent: can<Enum.UIFlexAlignment>?,
+	alignitems: can<Enum.ItemLineAlignment>?,
+	spacing: can<number | UDim>?,
+	wraps: can<boolean>?,
 
 	[number]: Instance
 }
 
 local function layout(props: layout)
 	return container {
-
-		Size = UDim2.fromScale(1, 0),
-		AutomaticSize = Enum.AutomaticSize.Y,
 		
 		create "UIListLayout" {
-			Padding = UDim.new(0, 8),
+			Padding = function()
+				local spacing: number | UDim? = read(props.spacing)
+				
+				return if typeof(spacing) == "number" then
+					UDim.new(0, spacing)
+				elseif typeof(spacing) == "UDim" then
+					spacing
+				elseif typeof(spacing) == "nil" then
+					UDim.new(0, 8)
+				else
+					error("incorrect spacing type")
+			end,
 			FillDirection = Enum.FillDirection.Horizontal,
 
-			props.list
+			HorizontalFlex = props.justifycontent,
+			ItemLineAlignment = props.alignitems,
+			Wraps = props.wraps
+			
 		},
-
-		props.layout,
 
 		unpack(props)
 	}

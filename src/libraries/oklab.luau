@@ -224,7 +224,7 @@ end
 function Oklab.gamut_clip_preserve_chroma(
 	rgb: Vector3
 ): Vector3
-	if rgb.X < 1 and rgb.Y < 1 and rgb.Z < 1 and rgb.X > 0 and rgb.Y > 0 and rgb.Z > 0 then
+	if rgb.X <= 1 and rgb.Y <= 1 and rgb.Z <= 1 and rgb.X >= 0 and rgb.Y >= 0 and rgb.Z >= 0 then
 		return rgb
 	end
 
@@ -247,7 +247,7 @@ end
 function Oklab.gamut_clip_project_to_0_5(
 	rgb: Vector3
 ): Vector3
-	if rgb.X < 1 and rgb.Y < 1 and rgb.Z < 1 and rgb.X > 0 and rgb.Y > 0 and rgb.Z > 0 then
+	if rgb.X <= 1 and rgb.Y <= 1 and rgb.Z <= 1 and rgb.X >= 0 and rgb.Y >= 0 and rgb.Z >= 0 then
 		return rgb
 	end
 
@@ -271,7 +271,7 @@ end
 function Oklab.gamut_clip_project_to_L_cusp(
 	rgb: Vector3
 ): Vector3
-	if rgb.X < 1 and rgb.Y < 1 and rgb.Z < 1 and rgb.X > 0 and rgb.Y > 0 and rgb.Z > 0 then
+	if rgb.X <= 1 and rgb.Y <= 1 and rgb.Z <= 1 and rgb.X >= 0 and rgb.Y >= 0 and rgb.Z >= 0 then
 		return rgb
 	end
 
@@ -300,7 +300,7 @@ function Oklab.gamut_clip_adaptive_L0_0_5(
 	rgb: Vector3,
 	alpha: number?
 ): Vector3
-	if rgb.X < 1 and rgb.Y < 1 and rgb.Z < 1 and rgb.X > 0 and rgb.Y > 0 and rgb.Z > 0 then
+	if rgb.X <= 1 and rgb.Y <= 1 and rgb.Z <= 1 and rgb.X >= 0 and rgb.Y >= 0 and rgb.Z >= 0 then
 		return rgb
 	end
 	local alpha = alpha or 0.05
