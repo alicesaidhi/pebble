@@ -1,7 +1,8 @@
 local vide = require(script.Parent.Parent.Parent.Parent.vide)
+local theme = require(script.Parent.Parent.Parent.util.theme)
+local unwrap = require(script.Parent.Parent.Parent.util.unwrap)
 
 local create = vide.create
-local values = vide.values
 local source = vide.source
 local read = vide.read
 
@@ -213,6 +214,7 @@ type props = {
 return function(props: props)
 
 	local shadows = {}
+	local zindex = source(0)
 
 	for key, value in {"penumbra", "umbra", "ambient"} do
 		local function data()
@@ -243,7 +245,9 @@ return function(props: props)
 				return 1 - data().opacity
 			end,
 
-			ZIndex = props.zindex
+			ZIndex = props.zindex or function()
+				return unwrap(zindex) * 1000 - 10
+			end
 
 		}
 	end
@@ -258,6 +262,9 @@ return function(props: props)
 
 		shadows,
 
-		props.layout
+		props.layout,
+
+		theme.zindex.receive(zindex)
+		
 	}
 end

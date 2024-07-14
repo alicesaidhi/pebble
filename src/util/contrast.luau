@@ -97,7 +97,7 @@ local function get_appropriate_color(options: {
 	min_contrast: recursive<number>,
 }): () -> Color3
 
-	return derive(function()
+	return function()
 		local min_contrast = unwrap(options.min_contrast)
 		local elevation = unwrap(options.elevation) or 0
 		local bg = unwrap(options.background)
@@ -143,7 +143,7 @@ local function get_appropriate_color(options: {
 
 		-- warn(`unable to find a color, max contrast found is {max // 1} but needs at least {min_contrast}`)
 		return furthest_away
-	end)
+	end
 
 end
 

@@ -41,7 +41,9 @@ local function cascade<T>(default_value: T)
 	function self.receive(output_to: (T) -> any)
 		return action(function(instance)
 			local function recalculate()
-				output_to(get_cascaded_value(instance.Parent))
+				output_to(
+					get_cascaded_value(instance.Parent)
+				)
 			end
 
 			recalculate()

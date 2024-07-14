@@ -2,10 +2,18 @@ local SOURCE_SANS = "rbxasset://fonts/families/SourceSansPro.json"
 
 return {
 
-	background = {{.24, 0, 0.4, 0.05}},
+	background = {{.2, 0.03, 0.4, 0.05}},
 
 	foreground = {
 		{.33, 0, 0.4},
+	},
+
+	foreground_hover = {
+		{.4, 0, 0.4}
+	},
+
+	foreground_press = {
+		{.25, 0, 0.4}
 	},
 
 	readable = {
@@ -14,7 +22,7 @@ return {
 	},
 
 	border = {
-		{.22, 0, 0.4}
+		{.24, 0, 0.4}
 	},
 
 	font = Font.new(
@@ -25,5 +33,8 @@ return {
 	body_size = 18,
 	heading_size = 36,
 	subheading_size = 28,
+
+	corner_interactable = UDim.new(0, 4),
+	corner_background = UDim.new(0, 8)
 
 }
