@@ -1,67 +1,44 @@
 local vide = require(script.Parent.Parent.Parent.Parent.vide)
-local anim = require(script.Parent.Parent.Parent.util.anim)
 local theme = require(script.Parent.Parent.Parent.util.theme)
-local unwrap = require(script.Parent.Parent.Parent.util.unwrap)
 
 local create = vide.create
-local source = vide.source
 local read = vide.read
 
 type can<T> = (() -> T) | T
-type props = {
-	size: can<UDim2>?,
-	position: can<UDim2>?,
-	anchorpoint: can<Vector2>?,
 
-	elevation: can<number>?,
-	elevation_increment: can<boolean>?,
+type Background = {
+    position: can<UDim2>?,
+    size: can<UDim2>?,
+    anchorpoint: can<UDim2>?,
 
-	[number]: any
+    layoutorder: can<number>?,
+    zindex: can<number>?,
+
+    depth: can<number>?,
+    accent: can<boolean>?,
+
+    [number]: Instance
 }
 
-return function(props: props)
+return function(props: Background)
 
-	local elevation = source(0)
-	local zindex = source(0)
+    return create "Frame" {
 
-	local background_color = theme.get_appropriate_color {
-		foreground = theme.theme.background,
-		elevation = props.elevation or elevation,
-		min_contrast = 15,
-	}
+        Position = props.position,
+        Size = props.size or UDim2.fromScale(1, 1),
+        AnchorPoint = props.anchorpoint,
 
-	local function increment_if(elevation: vide.Source<can<number>>, v: can<boolean>?)
-		if read(v) then
-			return function(n: can<number>)
-				elevation(function()
-					return unwrap(n) + 1
-				end)
-			end
-		else
-			return elevation
-		end
-	end
+        LayoutOrder = props.layoutorder,
 
-	return create "Frame" {
-		Name = "Background",
+        ZIndex = props.zindex,
 
-		Size = props.size or UDim2.fromScale(1, 1),
-		Position = props.position,
-		AnchorPoint = props.anchorpoint,
+        BackgroundColor3 = function()
+            return
+                if read(props.accent) then theme.acc[read(props.depth) or 0]()
+                else theme.bg[read(props.depth) or 0]()
+        end,
 
-		BackgroundColor3 = anim(background_color),
-
-		theme.elevation.receive(increment_if(elevation, props.elevation_increment)),
-		theme.elevation.send(elevation),
-		theme.color.send(background_color),
-		theme.zindex_increment(zindex),
-
-		ZIndex = function()
-			return unwrap(zindex) * 1000
-		end,
-
-		unpack(props)
-
-	}
-
+        unpack(props)
+        
+    }
 end
