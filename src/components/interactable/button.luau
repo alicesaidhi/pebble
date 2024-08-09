@@ -6,6 +6,7 @@ local padding = require(script.Parent.Parent.util.padding)
 local create = vide.create
 local source = vide.source
 local changed = vide.changed
+local show = vide.show
 local read = vide.read
 
 type can<T> = T | () -> T
@@ -22,7 +23,10 @@ type props = {
     down: () -> ()?,
     up: () -> ()?,
 
+    --- enables the stroke (enabled by default)
     stroke: can<boolean>?,
+    --- enables the corner (enabled by default)
+    corner: can<boolean>?,
     accent: can<boolean>?,
 
 }
@@ -105,16 +109,31 @@ return function(props: props)
             TextColor3 = anim(fg),
         },
 
-        create "UIStroke" {
-            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            
-            Color = anim(stroke),
-            Thickness = 1,
-        },
+        show(
+            function()
+                return read(props.stroke) ~= false
+            end,
+            source(
+                create "UIStroke" {
+                    ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+                    
+                    Color = anim(stroke),
+                    Thickness = 1,
+                    Enabled = props.stroke
+                }
+            )
+        ),
 
-        create "UICorner" {
-            CornerRadius = UDim.new(0, 4)
-        },
+        show(
+            function()
+                return read(props.corner) ~= false
+            end,
+            source(
+                create "UICorner" {
+                    CornerRadius = UDim.new(0,4)
+                }
+            )
+        ),
 
         padding {
             x = UDim.new(0, 8),
