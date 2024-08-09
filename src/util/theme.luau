@@ -19,8 +19,8 @@ local function oklch(t: {number})
     }
 end
 
-local background = source(oklch {0.8012, 0, 0.6})
-local accent = source(oklch {0.58, 0.21, 0.71})
+local background = source(oklch {0.3012, 0, 0.6}) -- note: for light mode change this to 0.8012 from 0.3012
+local accent = source(oklch {0.52, 0.21, 0.71})
 
 local BODY_SIZE = 18
 local HEADER_SIZE = 24

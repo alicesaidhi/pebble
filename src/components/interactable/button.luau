@@ -66,8 +66,8 @@ return function(props: props)
         local guistate = guistate()
 
         return if accent then
-                if guistate == Enum.GuiState.NonInteractable then theme.acc[-6]()
-                else theme.acc[-3]()
+                if guistate == Enum.GuiState.NonInteractable then theme.acc[-7]()
+                else theme.acc[-7]()
             else
                 if guistate == Enum.GuiState.NonInteractable then theme.bg[-3]()
                 else theme.bg[-3]()
@@ -87,15 +87,23 @@ return function(props: props)
 
         BackgroundColor3 = anim(bg),
 
-        Text = props.text,
-
-        TextSize = theme.body,
-        FontFace = theme.font,
-        TextColor3 = anim(fg),
-
         Activated = props.activated,
         MouseButton1Down = props.down,
         MouseButton1Up = props.up,
+
+        create "TextLabel" {
+            Position = UDim2.fromScale(0.5, 0.5),
+            AnchorPoint = Vector2.new(0.5, 0.5),
+            AutomaticSize = Enum.AutomaticSize.XY,
+
+            BackgroundTransparency = 1,
+
+            Text = props.text,
+
+            TextSize = theme.body,
+            FontFace = theme.font,
+            TextColor3 = anim(fg),
+        },
 
         create "UIStroke" {
             ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
