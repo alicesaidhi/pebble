@@ -1,4 +1,5 @@
 local vide = require(script.Parent.Parent.Parent.Parent.vide)
+local anim = require(script.Parent.Parent.Parent.util.anim)
 local theme = require(script.Parent.Parent.Parent.util.theme)
 local padding = require(script.Parent.Parent.util.padding)
 
@@ -17,9 +18,9 @@ type props = {
     text: can<string>?,
     disabled: can<boolean>?,
 
-    activated: () -> (),
-    down: () -> (),
-    up: () -> (),
+    activated: () -> ()?,
+    down: () -> ()?,
+    up: () -> ()?,
 
     stroke: can<boolean>?,
     accent: can<boolean>?,
@@ -35,17 +36,17 @@ return function(props: props)
         local guistate = guistate()
 
         return if accent then
-            if guistate == Enum.GuiState.NonInteractable then theme.acc[-3]
-            elseif guistate == Enum.GuiState.Idle then theme.acc[0]
-            elseif guistate == Enum.GuiState.Hover then theme.acc[3]
-            elseif guistate == Enum.GuiState.Press then theme.acc[-5]
-            else theme.acc[0]
+            if guistate == Enum.GuiState.NonInteractable then theme.acc[-5]()
+            elseif guistate == Enum.GuiState.Idle then theme.acc[0]()
+            elseif guistate == Enum.GuiState.Hover then theme.acc[3]()
+            elseif guistate == Enum.GuiState.Press then theme.acc[-8]()
+            else theme.acc[0]()
         else
-            if guistate == Enum.GuiState.NonInteractable  then theme.acc[-3]
-            elseif guistate == Enum.GuiState.Idle then theme.bg[3]
-            elseif guistate == Enum.GuiState.Hover then theme.bg[5]
-            elseif guistate == Enum.GuiState.Press then theme.bg[-2]
-            else theme.acc[0]
+            if guistate == Enum.GuiState.NonInteractable  then theme.bg[-2]()
+            elseif guistate == Enum.GuiState.Idle then theme.bg[3]()
+            elseif guistate == Enum.GuiState.Hover then theme.bg[5]()
+            elseif guistate == Enum.GuiState.Press then theme.bg[-2]()
+            else theme.acc[0]()
     end
 
     local function fg()
@@ -53,35 +54,44 @@ return function(props: props)
         local guistate = guistate()
 
         return if accent then
-            if guistate == Enum.GuiState.NonInteractable then theme.fg_on_acc_low[0]
-            else theme.fg_on_acc_high[0]
+            if guistate == Enum.GuiState.NonInteractable then theme.fg_on_acc_low[0]()
+            else theme.fg_on_acc_high[0]()
         else
-            if guistate == Enum.GuiState.NonInteractable  then theme.fg_on_bg_low[0]
-            else theme.fg_on_bg_low[0]
+            if guistate == Enum.GuiState.NonInteractable  then theme.fg_on_bg_low[0]()
+            else theme.fg_on_bg_high[0]()
     end
     
     local function stroke()
-        return if read(props.accent) then theme.acc[-3]
-            else theme.bg[-3]
+        local accent = read(props.accent)
+        local guistate = guistate()
+
+        return if accent then
+                if guistate == Enum.GuiState.NonInteractable then theme.acc[-6]()
+                else theme.acc[-3]()
+            else
+                if guistate == Enum.GuiState.NonInteractable then theme.bg[-3]()
+                else theme.bg[-3]()
     end
 
     return create "TextButton" {
 
         Name = props.text,
 
-        Size = props.size or UDim2.fromOffset(200, 30),
+        Size = props.size or UDim2.fromOffset(100, 30),
         Position = props.position,
         AnchorPoint = props.anchorpoint,
 
-        Interactable = props.disabled,
+        Interactable = function()
+            return not props.disabled 
+        end,
 
-        BackgroundColor3 = bg,
+        BackgroundColor3 = anim(bg),
 
         Text = props.text,
 
         TextSize = theme.body,
         FontFace = theme.font,
-        TextColor3 = fg,
+        TextColor3 = anim(fg),
 
         Activated = props.activated,
         MouseButton1Down = props.down,
@@ -90,8 +100,12 @@ return function(props: props)
         create "UIStroke" {
             ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
             
-            Color = stroke,
+            Color = anim(stroke),
             Thickness = 1,
+        },
+
+        create "UICorner" {
+            CornerRadius = UDim.new(0, 4)
         },
 
         padding {

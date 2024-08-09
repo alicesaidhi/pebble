@@ -16,7 +16,7 @@ return function<T>(s: () -> T)
 		is_movement = true
 	end
 
-	local spr = spring(s, 0.2)
+	local spr = spring(s, 0.1)
 	return function()
 		if is_movement and reduce then
 			return s()

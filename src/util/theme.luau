@@ -19,13 +19,13 @@ local function oklch(t: {number})
     }
 end
 
-local background = source(oklch {0.3012, 0.02, 0.6})
-local accent = source(oklch {0.7, 0.01, 0.6})
+local background = source(oklch {0.8012, 0, 0.6})
+local accent = source(oklch {0.58, 0.21, 0.71})
 
-local BODY_SIZE = 16
+local BODY_SIZE = 18
 local HEADER_SIZE = 24
 local FONT = Font.new(
-    "rbxasset://fonts/families/BuilderSans",
+    "rbxasset://fonts/families/BuilderSans.json",
     Enum.FontWeight.Regular,
     Enum.FontStyle.Normal
 )
@@ -36,7 +36,7 @@ local function should_flip(lightness: number)
 end
 
 local CONTRAST_LOW = 0.4
-local CONTRAST_HIGH = 0.8
+local CONTRAST_HIGH = 0.7
 
 type Depth = number
 type ColorPalette = {
@@ -54,19 +54,24 @@ local function compute_bg(depth: Depth)
         local bg = background()
         -- print(bg.l + 0.01 * depth, depth, bg.c, bg.h)
 
-        if should_flip(bg.l) then
-            return oklch {
-                math.clamp(bg.l - 0.02 * depth, 0, 1),
-                bg.c,
-                bg.h
-            }
-        else
-            return oklch {
-                math.clamp(bg.l + 0.02 * depth, 0, 1),
-                bg.c,
-                bg.h
-            }
-        end
+        return oklch {
+            math.clamp(bg.l + 0.02 * depth, 0, 1),
+            bg.c,
+            bg.h
+        }
+        -- if should_flip(bg.l) then
+        --     return oklch {
+        --         math.clamp(bg.l - 0.02 * depth, 0, 1),
+        --         bg.c,
+        --         bg.h
+        --     }
+        -- else
+        --     return oklch {
+        --         math.clamp(bg.l + 0.02 * depth, 0, 1),
+        --         bg.c,
+        --         bg.h
+        --     }
+        -- end
     end
 
     return function(raw: boolean)
@@ -79,20 +84,24 @@ local function compute_acc(depth: Depth)
     local function get()
         local bg = accent()
         -- print(bg.l + 0.01 * depth, depth, bg.c, bg.h)
-
-        if should_flip(bg.l) then
-            return oklch {
-                math.clamp(bg.l - 0.02 * depth, 0, 1),
-                bg.c,
-                bg.h
-            }
-        else
-            return oklch {
-                math.clamp(bg.l + 0.02 * depth, 0, 1),
-                bg.c,
-                bg.h
-            }
-        end
+        return oklch {
+            math.clamp(bg.l + 0.02 * depth, 0, 1),
+            bg.c,
+            bg.h
+        }
+        -- if should_flip(bg.l) then
+        --     return oklch {
+        --         math.clamp(bg.l - 0.02 * depth, 0, 1),
+        --         bg.c,
+        --         bg.h
+        --     }
+        -- else
+        --     return oklch {
+        --         math.clamp(bg.l + 0.02 * depth, 0, 1),
+        --         bg.c,
+        --         bg.h
+        --     }
+        -- end
     end
 
     return function(raw: boolean)
