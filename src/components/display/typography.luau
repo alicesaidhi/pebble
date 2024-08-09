@@ -1,0 +1,57 @@
+local vide = require(script.Parent.Parent.Parent.Parent.vide)
+local anim = require(script.Parent.Parent.Parent.util.anim)
+local theme = require(script.Parent.Parent.Parent.util.theme)
+
+local create = vide.create
+local read = vide.read
+
+type can<T> = T | () -> T
+type props = {
+
+	size: can<UDim2>?,
+	position: can<UDim2>?,
+	anchorpoint: can<Vector2>?,
+
+	accent: can<boolean>?,
+	
+	header: can<boolean>?,
+	disabled: can<boolean>?,
+
+	text: can<string>
+
+}
+
+return function(props: props)
+
+	local function fg()
+        local accent = read(props.accent)
+		local disabled = read(props.disabled)
+
+        return if accent then
+            if disabled then theme.fg_on_acc_low[0]()
+            else theme.fg_on_acc_high[0]()
+        else
+            if disabled then theme.fg_on_bg_low[0]()
+            else theme.fg_on_bg_high[0]()
+    end
+
+	return create "TextLabel" {
+
+		Size = props.size,
+		Position = props.position,
+		AnchorPoint = props.anchorpoint,
+		AutomaticSize = Enum.AutomaticSize.XY,
+
+		BackgroundTransparency = 1,
+
+		Text = props.text,
+
+		TextSize = function()
+			return if read(props.header) then theme.header else theme.body
+		end,
+		FontFace = theme.font,
+		TextColor3 = anim(fg),
+
+	}
+
+end

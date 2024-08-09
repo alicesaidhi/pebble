@@ -1,6 +1,7 @@
 local vide = require(script.Parent.Parent.Parent.Parent.vide)
 local anim = require(script.Parent.Parent.Parent.util.anim)
 local theme = require(script.Parent.Parent.Parent.util.theme)
+local typography = require(script.Parent.Parent.display.typography)
 local padding = require(script.Parent.Parent.util.padding)
 
 local create = vide.create
@@ -53,18 +54,6 @@ return function(props: props)
             else theme.acc[0]()
     end
 
-    local function fg()
-        local accent = read(props.accent)
-        local guistate = guistate()
-
-        return if accent then
-            if guistate == Enum.GuiState.NonInteractable then theme.fg_on_acc_low[0]()
-            else theme.fg_on_acc_high[0]()
-        else
-            if guistate == Enum.GuiState.NonInteractable  then theme.fg_on_bg_low[0]()
-            else theme.fg_on_bg_high[0]()
-    end
-    
     local function stroke()
         local accent = read(props.accent)
         local guistate = guistate()
@@ -95,18 +84,16 @@ return function(props: props)
         MouseButton1Down = props.down,
         MouseButton1Up = props.up,
 
-        create "TextLabel" {
-            Position = UDim2.fromScale(0.5, 0.5),
-            AnchorPoint = Vector2.new(0.5, 0.5),
-            AutomaticSize = Enum.AutomaticSize.XY,
+        typography {
 
-            BackgroundTransparency = 1,
+            position = UDim2.fromScale(0.5, 0.5),
+            anchorpoint = Vector2.new(0.5, 0.5),
 
-            Text = props.text,
+            text = props.text,
 
-            TextSize = theme.body,
-            FontFace = theme.font,
-            TextColor3 = anim(fg),
+            accent = props.accent,
+            disabled = props.disabled
+
         },
 
         show(

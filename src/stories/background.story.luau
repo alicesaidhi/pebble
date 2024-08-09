@@ -1,6 +1,5 @@
 local vide = require(script.Parent.Parent.Parent.vide)
-local background = require(script.Parent.Parent.components.containers.background)
-local container = require(script.Parent.Parent.components.util.container)
+local background = require(script.Parent.Parent.components.display.background)
 local padding = require(script.Parent.Parent.components.util.padding)
 local shadow = require(script.Parent.Parent.components.util.shadow)
 
