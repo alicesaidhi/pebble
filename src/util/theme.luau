@@ -19,8 +19,8 @@ local function oklch(t: {number})
     }
 end
 
-local background = source(oklch {0.3012, 0, 0})
-local accent = source(oklch {0.5, 0.6, 0})
+local background = source(oklch {0.3012, 0.02, 0.6})
+local accent = source(oklch {0.7, 0.01, 0.6})
 
 local BODY_SIZE = 16
 local HEADER_SIZE = 24
@@ -195,8 +195,8 @@ type Theme = {
 
 local function compute_theme()
 
-    local MAX_DEPTH = 10
-    local MIN_DEPTH = -10
+    local MAX_DEPTH = 20
+    local MIN_DEPTH = -20
 
     local theme = {
         bg = {},
