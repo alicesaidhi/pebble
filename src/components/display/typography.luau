@@ -13,11 +13,15 @@ type props = {
 	anchorpoint: can<Vector2>?,
 
 	accent: can<boolean>?,
+
+	xalignment: can<Enum.TextXAlignment>?,
+	yalignment: can<Enum.TextYAlignment>?,
 	
 	header: can<boolean>?,
 	disabled: can<boolean>?,
-
-	text: can<string>
+	
+	text: can<string>,
+	textsize: can<number>?,
 
 }
 
@@ -42,11 +46,14 @@ return function(props: props)
 		AnchorPoint = props.anchorpoint,
 		AutomaticSize = Enum.AutomaticSize.XY,
 
+		TextXAlignment = props.xalignment,
+		TextYAlignment = props.yalignment,
+
 		BackgroundTransparency = 1,
 
 		Text = props.text,
 
-		TextSize = function()
+		TextSize = props.textsize or function()
 			return if read(props.header) then theme.header else theme.body
 		end,
 		FontFace = theme.font,
