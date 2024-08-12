@@ -10,6 +10,7 @@ type Background = {
     position: can<UDim2>?,
     size: can<UDim2>?,
     anchorpoint: can<UDim2>?,
+    automaticsize: can<Enum.AutomaticSize>?,
 
     layoutorder: can<number>?,
     zindex: can<number>?,
@@ -27,6 +28,7 @@ return function(props: Background)
         Position = props.position,
         Size = props.size or UDim2.fromScale(1, 1),
         AnchorPoint = props.anchorpoint,
+        AutomaticSize = props.automaticsize,
 
         LayoutOrder = props.layoutorder,
 
