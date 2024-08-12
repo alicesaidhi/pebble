@@ -23,6 +23,9 @@ type layout = {
 
 local function layout(props: layout)
 	return container {
+
+		Size = UDim2.fromScale(1, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
 		
 		create "UIListLayout" {
 			Padding = function()
