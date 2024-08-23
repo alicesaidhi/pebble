@@ -6,6 +6,7 @@ local vide = require(script.Parent.Parent.Parent.Parent.vide)
 local theme = require(script.Parent.Parent.Parent.util.theme)
 local container = require(script.Parent.Parent.util.container)
 local shadow = require(script.Parent.Parent.util.shadow)
+local snapping = require(script.Parent.snapping)
 local borders = require(script.borders)
 local topbar = require(script.topbar)
 
@@ -33,6 +34,42 @@ type props = {
 
 local HIGHEST_DISPLAY_ORDER = 100000
 local RESIZE_RANGE = 6
+
+local docks
+
+vide.mount(function()
+
+	docks = snapping()
+
+	return create "ScreenGui" {
+		Name = "docks",
+		
+		-- create "Frame" {
+		-- 	Size = UDim2.new(1, 0, 0, 200),
+
+		-- 	BackgroundTransparency = 1,
+	
+		-- 	docks.snap_area {}
+		-- },
+	
+		-- create "Frame" {
+		-- 	Size = UDim2.new(1, 0, 0, 200),
+		-- 	Position = UDim2.fromScale(0, 1),
+		-- 	AnchorPoint = Vector2.new(0, 1),
+		-- 	BackgroundTransparency = 1,
+	
+		-- 	docks.snap_area {}
+		-- },
+	
+		create "Frame" {
+			Size = UDim2.new(0, 16, 1, 0),
+			BackgroundTransparency = 1,
+	
+			docks.snap_area {}
+		},
+	}
+
+end, game:GetService("CoreGui"))
 
 return function(props: props)
 	local min_size = Vector2.new(100, 100):Max(props.min_size or Vector2.zero)
@@ -129,7 +166,14 @@ return function(props: props)
 		y_position(position.Y + offset().Y)
 	end))
 
+	local snapped = source(false)
+	local snap_size = source(UDim2.new())
+	local snap_pos = source(UDim2.new())
 
+	local function radius()
+		return if snapped() then UDim.new() else UDim.new(0, 6)
+	end
+	
 	return create "ScreenGui" {
 		Name = props.title,
 		DisplayOrder = display_order,
@@ -138,11 +182,11 @@ return function(props: props)
 
 		create "Frame" {
 			Position = spring(function()
-				return UDim2.fromOffset(x_position(), y_position())
+				return if snapped() then snap_pos() else UDim2.fromOffset(x_position(), y_position())
 			end, 0.1),
 
 			Size = spring(function()
-				return UDim2.fromOffset(x_size() + 6, y_size() + 6)
+				return if snapped() then UDim2.fromOffset(x_size() + 6, snap_size().Y.Offset) else UDim2.fromOffset(x_size() + 6, y_size() + 6)
 			end, 0.1),
 
 			BackgroundColor3 = theme.bg[0],
@@ -176,7 +220,7 @@ return function(props: props)
 			changed("AbsoluteSize", absolute_size),
 
 			create "UICorner" {
-				CornerRadius = UDim.new(0, 6)
+				CornerRadius = radius
 			},
 
 			shadow {},
@@ -204,7 +248,8 @@ return function(props: props)
 					subtitle = props.subtitle,
 					dragging = dragging,
 					offset = offset,
-					bind_to_close = props.bind_to_close
+					bind_to_close = props.bind_to_close,
+					radius = radius
 				},
 
 				create "Frame" {
@@ -220,6 +265,14 @@ return function(props: props)
 						FlexMode = Enum.UIFlexMode.Grow
 					}
 				}
+			},
+
+			docks.snappable {
+				dragging = dragging,
+
+				snapped = snapped,
+				position = snap_pos,
+				size = snap_size
 			}
 
 		},

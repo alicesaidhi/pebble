@@ -1,7 +1,6 @@
 
 local vide = require(script.Parent.Parent.Parent.Parent.Parent.vide)
 local theme = require(script.Parent.Parent.Parent.Parent.util.theme)
-local button = require(script.Parent.Parent.Parent.interactable.button)
 local list = require(script.Parent.Parent.Parent.util.list)
 local padding = require(script.Parent.Parent.Parent.util.padding)
 local rounded_frame = require(script.Parent.Parent.Parent.util.rounded_frame)
@@ -19,6 +18,8 @@ type props = {
 	title: (string | () -> string)?,
 	subtitle: (string | () -> string)?,
 	bind_to_close: (() -> ())?,
+
+	radius: () -> UDim,
 
 	dragging: Source<boolean>,
 	offset: (new: Vector2) -> (),
@@ -44,8 +45,8 @@ return function(props: props)
 		size = UDim2.new(1, 0, 0, 48),
 		color = theme.bg[3],
 
-		topleft = UDim.new(0, 6),
-		topright = UDim.new(0, 6),
+		topleft = props.radius,
+		topright = props.radius,
 
 		create "ImageButton" {
 			Size = UDim2.fromScale(1, 1),

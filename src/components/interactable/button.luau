@@ -49,8 +49,8 @@ return function(props: props)
         else
             if guistate == Enum.GuiState.NonInteractable  then theme.bg[-2]()
             elseif guistate == Enum.GuiState.Idle then theme.bg[3]()
-            elseif guistate == Enum.GuiState.Hover then theme.bg[5]()
-            elseif guistate == Enum.GuiState.Press then theme.bg[-2]()
+            elseif guistate == Enum.GuiState.Hover then theme.bg[6]()
+            elseif guistate == Enum.GuiState.Press then theme.bg[0]()
             else theme.acc[0]()
     end
 
