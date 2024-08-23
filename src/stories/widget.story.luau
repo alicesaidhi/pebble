@@ -1,4 +1,5 @@
 local vide = require(script.Parent.Parent.Parent.vide)
+local typography = require(script.Parent.Parent.components.display.typography)
 local widget = require(script.Parent.Parent.components.display.widget)
 
 local source = vide.source
@@ -12,7 +13,11 @@ return function(target)
 		
 		return widget {
 			title = "widget testing errrrrrrrrrr",
-			subtitle = "hey!"
+			subtitle = "hey!",
+
+			typography {
+				text = "hello!"
+			}
 
 		}
 

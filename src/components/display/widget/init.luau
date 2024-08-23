@@ -5,7 +5,9 @@ local UserInputService = game:GetService("UserInputService")
 local vide = require(script.Parent.Parent.Parent.Parent.vide)
 local theme = require(script.Parent.Parent.Parent.util.theme)
 local container = require(script.Parent.Parent.util.container)
+local padding = require(script.Parent.Parent.util.padding)
 local shadow = require(script.Parent.Parent.util.shadow)
+local divider = require(script.Parent.divider)
 local snapping = require(script.Parent.snapping)
 local borders = require(script.borders)
 local topbar = require(script.topbar)
@@ -252,18 +254,21 @@ return function(props: props)
 					radius = radius
 				},
 
-				create "Frame" {
-					Size = UDim2.new(1, 0, 0, 1),
-
-					BackgroundColor3 = theme.bg[-3],
-				},
+				divider {},
 				
 				container {
 					Size = UDim2.fromScale(1, 0),
 
+					padding {
+						x = UDim.new(0, 8),
+						y = UDim.new(0, 8)
+					},
+
+					unpack(props),
+
 					create "UIFlexItem" {
 						FlexMode = Enum.UIFlexMode.Grow
-					}
+					},
 				}
 			},
 
