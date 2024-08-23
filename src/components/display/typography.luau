@@ -11,11 +11,13 @@ type props = {
 	size: can<UDim2>?,
 	position: can<UDim2>?,
 	anchorpoint: can<Vector2>?,
+	automaticsize: can<Enum.AutomaticSize>?,
 
 	accent: can<boolean>?,
 
 	xalignment: can<Enum.TextXAlignment>?,
 	yalignment: can<Enum.TextYAlignment>?,
+	truncate: can<Enum.TextTruncate>?,
 	
 	header: can<boolean>?,
 	disabled: can<boolean>?,
@@ -44,10 +46,11 @@ return function(props: props)
 		Size = props.size,
 		Position = props.position,
 		AnchorPoint = props.anchorpoint,
-		AutomaticSize = Enum.AutomaticSize.XY,
+		AutomaticSize = props.automaticsize or Enum.AutomaticSize.XY,
 
 		TextXAlignment = props.xalignment,
 		TextYAlignment = props.yalignment,
+		TextTruncate = props.truncate,
 
 		BackgroundTransparency = 1,
 
@@ -56,7 +59,11 @@ return function(props: props)
 		TextSize = props.textsize or function()
 			return if read(props.header) then theme.header else theme.body
 		end,
-		FontFace = theme.font,
+		FontFace = function()
+			return if read(props.header) then
+				Font.new(theme.font.Family, Enum.FontWeight.Bold)
+			else theme.font
+		end,
 		TextColor3 = anim(fg),
 
 	}

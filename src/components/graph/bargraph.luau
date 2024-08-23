@@ -3,10 +3,7 @@ local theme = require(script.Parent.Parent.Parent.util.theme)
 local container = require(script.Parent.Parent.util.container)
 
 local create = vide.create
-local source = vide.source
-local action = vide.action
 local indexes = vide.indexes
-local effect = vide.effect
 local read = vide.read
 
 type can<T> = T | () -> T
