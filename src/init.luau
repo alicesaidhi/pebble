@@ -9,6 +9,12 @@ local graph = require(script.components.graph.graph)
 local linegraph = require(script.components.graph.linegraph)
 local button = require(script.components.interactable.button)
 local textfield = require(script.components.interactable.textfield)
+local gap = require(script.components.util.gap)
+local list = require(script.components.util.list)
+local padding = require(script.components.util.padding)
+local row = require(script.components.util.row)
+local virtualscroller = require(script.components.util.virtualscroller)
+local theme = require(script.util.theme)
 
 
 return {
@@ -26,6 +32,16 @@ return {
 	button = button,
 	textfield = textfield,
 
-	pages = pages
+	pages = pages,
+
+	theme = theme,
+	
+	list = list,
+	row = row,
+	
+	padding = padding,
+
+	virtualscroller = virtualscroller,
+	gap = gap
 
 }

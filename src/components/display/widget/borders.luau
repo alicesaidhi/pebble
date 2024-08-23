@@ -1,3 +1,4 @@
+local GuiService = game:GetService("GuiService")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
@@ -65,6 +66,8 @@ return function(props: props)
 
 	cleanup(RunService.Heartbeat:Connect(function()
 		local mposition = UserInputService:GetMouseLocation()
+		local top_inset, bottom_inset = GuiService:GetGuiInset()
+		mposition += - top_inset - bottom_inset
 
 		if MIN_SIZE.X ~= absolute_size().X or not resizing() then x(mposition.X) end
 		if MIN_SIZE.Y ~= absolute_size().Y or not resizing() then y(mposition.Y) end
@@ -72,6 +75,8 @@ return function(props: props)
 
 	cleanup(RunService.RenderStepped:Connect(function()
 		local mposition = UserInputService:GetMouseLocation()
+		local top_inset, bottom_inset = GuiService:GetGuiInset()
+		mposition += - top_inset - bottom_inset
 		local x, y = mposition.X, mposition.Y
 
 		if resizing() then return end

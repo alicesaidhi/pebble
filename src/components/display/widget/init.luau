@@ -1,3 +1,4 @@
+local GuiService = game:GetService("GuiService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -71,7 +72,7 @@ vide.mount(function()
 		},
 	}
 
-end, game:GetService("CoreGui"))
+end, Players.LocalPlayer.PlayerGui)
 
 return function(props: props)
 	local min_size = Vector2.new(100, 100):Max(props.min_size or Vector2.zero)
@@ -118,6 +119,8 @@ return function(props: props)
 		if not resizing() then return end
 
 		local mposition = UserInputService:GetMouseLocation()
+		local top_inset, bottom_inset = GuiService:GetGuiInset()
+		mposition += - top_inset - bottom_inset
 		local x, y = mposition.X, mposition.Y
 
 		if can_resize_bottom() then y_size(math.max(y - top.Y, min_size.Y)) end
@@ -164,6 +167,8 @@ return function(props: props)
 		end
 
 		local position = UserInputService:GetMouseLocation()
+		-- local top_inset, bottom_inset = GuiService:GetGuiInset()
+		-- position += - top_inset - bottom_inset
 		x_position(position.X + offset().X)
 		y_position(position.Y + offset().Y)
 	end))
@@ -179,7 +184,6 @@ return function(props: props)
 	return create "ScreenGui" {
 		Name = props.title,
 		DisplayOrder = display_order,
-		IgnoreGuiInset = true,
 		reference(ref),
 
 		create "Frame" {
@@ -197,6 +201,8 @@ return function(props: props)
 				if resizing() then return end
 
 				local mposition = UserInputService:GetMouseLocation()
+				local top_inset, bottom_inset = GuiService:GetGuiInset()
+				position += - top_inset - bottom_inset
 				local x, y = mposition.X, mposition.Y
 				x -= absolute_position().X
 				y -= absolute_position().Y
