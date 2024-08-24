@@ -8,14 +8,21 @@ local row = require(script.Parent.Parent.components.util.row)
 return function(target)
 
 	return vide.mount(function()
+
+		local columns = vide.source {
+			{"header", "meow", "mraow", "mrrrp", "purr"},
+			{"header", "meow", "mraow", "mrrrp", "purr"},
+			{"header", "meow", "mraow", "mrrrp", "purr"}
+		}
 		
 		return tablesheet {
-			column_sizes = vide.source {100, 100, 100},
-			columns = vide.source {
-				table.create(10, "meow"),
-				table.create(10, "meow"),
-				table.create(10, "meow")
-			},
+			column_sizes = vide.source {100, 200, 100},
+			columns = columns,
+
+			read_value = function(column, row)
+				return columns()[column][row]
+			end,
+
 			max_characters_per_column = 40
 
 		}

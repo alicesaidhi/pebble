@@ -21,6 +21,10 @@ type table = {
 	columns: () -> {{any}},
 	max_characters_per_column: number?,
 
+	on_click: (column: number, row: number) -> (),
+	on_click2: (column: number, row: number) -> (),
+	read_value: (column: number, row: number) -> string,
+	
 	[number]: any
 
 }
@@ -38,6 +42,9 @@ return function(props: table)
 	return scroll_frame {
 		Size = props.size or UDim2.new(1, 0, 0, 8 * 32),
 		CanvasSize = UDim2.fromOffset(combined_size(), 0),
+
+		BackgroundTransparency = 0,
+		BackgroundColor3 = theme.bg[0],
 
 		create "UIListLayout" {
 			VerticalFlex = Enum.UIFlexAlignment.SpaceEvenly
@@ -137,9 +144,8 @@ return function(props: table)
 							automaticsize = Enum.AutomaticSize.None,
 
 							text = function()
-								return column()[index() + 2] or ""
+								return props.read_value(i, index() + 2) or ""
 							end,
-
 
 							create "UIListLayout" {
 								FillDirection = Enum.FillDirection.Horizontal,
@@ -149,6 +155,14 @@ return function(props: table)
 							corner = false,
 							stroke = false,
 							code = true,
+
+							activated = function()
+								props.on_click(i, index() + 2)
+							end,
+
+							mouse2 = function()
+								props.on_click2(i, index() + 2)
+							end
 						}
 					end)
 
@@ -157,7 +171,7 @@ return function(props: table)
 			end,
 
 			max_items = function()
-				return #props.columns()[1] - 1
+				return #props.columns()[1] - 2
 			end,
 			
 	

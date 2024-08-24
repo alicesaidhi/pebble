@@ -21,6 +21,7 @@ type props = {
     disabled: can<boolean>?,
 
     activated: () -> ()?,
+    mouse2: () -> ()?,
     down: () -> ()?,
     up: () -> ()?,
 
@@ -85,6 +86,7 @@ return function(props: props)
         BackgroundColor3 = anim(bg),
 
         Activated = props.activated,
+        MouseButton2Click = props.mouse2,
         MouseButton1Down = props.down,
         MouseButton1Up = props.up,
 
