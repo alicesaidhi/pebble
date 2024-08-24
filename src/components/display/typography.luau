@@ -20,6 +20,7 @@ type props = {
 	truncate: can<Enum.TextTruncate>?,
 	
 	header: can<boolean>?,
+	code: can<boolean>?,
 	disabled: can<boolean>?,
 	
 	text: can<string>,
@@ -30,6 +31,10 @@ type props = {
 }
 
 return function(props: props)
+
+	local function font()
+		return if read(props.code) then theme.code else theme.font
+	end
 
 	local function fg()
         local accent = read(props.accent)
@@ -63,8 +68,8 @@ return function(props: props)
 		end,
 		FontFace = function()
 			return if read(props.header) then
-				Font.new(theme.font.Family, Enum.FontWeight.Bold)
-			else theme.font
+				Font.new(font().Family, Enum.FontWeight.Bold)
+			else font()
 		end,
 		TextColor3 = anim(fg),
 

@@ -1,4 +1,5 @@
 local vide = require(script.Parent.Parent.Parent.Parent.vide)
+local scroll_frame = require(script.Parent.Parent.display.scroll_frame)
 local container = require(script.Parent.container)
 
 local create = vide.create
@@ -25,6 +26,8 @@ type props = {
 	separator_size: number?,
 
 	max_items: (() -> number)?,
+
+	[number]: any
 
 }
 
@@ -117,7 +120,9 @@ return function(props: props)
 
 	end)
 
-	return create "ScrollingFrame" {
+	return scroll_frame {
+
+		unpack(props),
 
 		Size = props.size or UDim2.fromScale(1, 1),
 		Position = props.position,
@@ -171,6 +176,7 @@ return function(props: props)
 
 		changed("AbsoluteSize", absolute_size),
 		changed("CanvasPosition", canvas_position),
+
 
 	}
 

@@ -24,8 +24,13 @@ local accent = source(oklch {0.52, 0.21, 0.71}) -- note: for light mode change t
 
 local BODY_SIZE = 18
 local HEADER_SIZE = 24
-local FONT = Font.new(
-    "rbxasset://fonts/families/BuilderSans.json",
+local FONT = Font.fromName(
+    "BuilderSans",
+    Enum.FontWeight.Regular,
+    Enum.FontStyle.Normal
+)
+local FONT_CODE = Font.new(
+    "rbxassetid://16658246179",
     Enum.FontWeight.Regular,
     Enum.FontStyle.Normal
 )
@@ -199,6 +204,7 @@ type Theme = {
     body: number,
     header: number,
     font: Font,
+    font_code: Font,
 
 }
 
@@ -218,7 +224,8 @@ local function compute_theme()
         
         body = BODY_SIZE,
         header = HEADER_SIZE,
-        font = FONT
+        font = FONT,
+        code = FONT_CODE
     }
 
     for i = MIN_DEPTH, MAX_DEPTH do

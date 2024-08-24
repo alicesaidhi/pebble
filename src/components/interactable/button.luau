@@ -30,6 +30,8 @@ type props = {
     corner: can<boolean>?,
     accent: can<boolean>?,
 
+    code: can<boolean>?,
+
     [number]: any
 
 }
@@ -96,7 +98,9 @@ return function(props: props)
             truncate = Enum.TextTruncate.SplitWord,
 
             accent = props.accent,
-            disabled = props.disabled
+            disabled = props.disabled,
+
+            code = props.code
 
         },
 

@@ -5,7 +5,7 @@ local create = vide.create
 
 type props = vide.vScrollingFrame
 
-return function(props)
+return function(props: props)
 
 	return create "ScrollingFrame" {
 
