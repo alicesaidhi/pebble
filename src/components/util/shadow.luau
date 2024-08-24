@@ -10,20 +10,11 @@ type props = {
 
 return function(props: props)
 	
-	return create "ImageLabel" {
+	return create "UIStroke" {
 
-		Name = "Shadow",
-		
-		Size = UDim2.new(1, 8, 1, 8),
-		Position = UDim2.fromScale(0.5, 0),
-		AnchorPoint = Vector2.new(0.5, 0),
+		Thickness = 2,
+		Color = Color3.new(0, 0, 0),
+		Transparency = 0.8
 
-		BackgroundTransparency = 1,
-		Image = "rbxtemp://0",
-
-		ScaleType = Enum.ScaleType.Slice,
-		SliceCenter = Rect.new(4, 0, 104, 100),
-		ImageTransparency = props.transparency
-		
 	}
 end

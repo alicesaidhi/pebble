@@ -15,10 +15,12 @@ type props = {
 	size: can<UDim2>?,
 	position: can<UDim2>?,
 	anchorpoint: can<UDim2>?,
+	layoutorder: can<number>?,
+	automaticsize: can<Enum.AutomaticSize>?,
 
-	name: can<string>,
+	name: can<string>?,
 
-	[number]: Instance
+	[number]: any
 
 }
 
@@ -28,10 +30,12 @@ return function(props: props)
 
 		Name = props.name,
 
-		Size = props.size,
+		Size = props.size or UDim2.fromScale(1, 0),
 		Position = props.position,
 		AnchorPoint = props.anchorpoint,
-		AutomaticSize = Enum.AutomaticSize.XY,
+		LayoutOrder = props.layoutorder,
+		AutomaticSize = props.automaticsize or Enum.AutomaticSize.Y,
+
 
 		BackgroundColor3 = theme.bg[0],
 

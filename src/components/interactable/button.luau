@@ -30,6 +30,8 @@ type props = {
     corner: can<boolean>?,
     accent: can<boolean>?,
 
+    [number]: any
+
 }
 
 return function(props: props)
@@ -88,8 +90,10 @@ return function(props: props)
 
             position = UDim2.fromScale(0.5, 0.5),
             anchorpoint = Vector2.new(0.5, 0.5),
+            automaticsize = Enum.AutomaticSize.XY,
 
             text = props.text,
+            truncate = Enum.TextTruncate.SplitWord,
 
             accent = props.accent,
             disabled = props.disabled
@@ -127,7 +131,9 @@ return function(props: props)
             y = UDim.new(0, 2)
         },
 
-        changed("GuiState", guistate)
+        changed("GuiState", guistate),
+        
+        unpack(props),
 
     }
 end

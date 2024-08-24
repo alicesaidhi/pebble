@@ -3,11 +3,11 @@
 registry = "test"
 
 [[package]]
-name = "alice/pebble"
-version = "0.1.0"
-dependencies = [["vide", "aloroid/vide-with-types@0.2.4"]]
+name = "alicesaidhi/pebble"
+version = "0.1.0-rc.2"
+dependencies = [["vide", "aloroid/vide-with-types@0.2.7"]]
 
 [[package]]
 name = "aloroid/vide-with-types"
-version = "0.2.4"
+version = "0.2.7"
 dependencies = []

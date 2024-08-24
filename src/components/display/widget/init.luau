@@ -31,7 +31,7 @@ type props = {
 
 	bind_to_close: (() -> ())?,
 
-	[number]: Instance
+	[number]: any
 
 }
 

@@ -18,7 +18,7 @@ type Background = {
     depth: can<number>?,
     accent: can<boolean>?,
 
-    [number]: Instance
+    [number]: any
 }
 
 return function(props: Background)

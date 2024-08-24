@@ -25,6 +25,8 @@ type props = {
 	text: can<string>,
 	textsize: can<number>?,
 
+	[number]: any
+
 }
 
 return function(props: props)
@@ -66,6 +68,7 @@ return function(props: props)
 		end,
 		TextColor3 = anim(fg),
 
+		unpack(props)
 	}
 
 end
