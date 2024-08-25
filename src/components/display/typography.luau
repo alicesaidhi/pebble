@@ -18,6 +18,7 @@ type props = {
 	xalignment: can<Enum.TextXAlignment>?,
 	yalignment: can<Enum.TextYAlignment>?,
 	truncate: can<Enum.TextTruncate>?,
+	wrapped: can<boolean>?,
 	
 	header: can<boolean>?,
 	code: can<boolean>?,
@@ -66,6 +67,7 @@ return function(props: props)
 		TextSize = props.textsize or function()
 			return if read(props.header) then theme.header else theme.body
 		end,
+		TextWrapped = props.wrapped,
 		FontFace = function()
 			return if read(props.header) then
 				Font.new(font().Family, Enum.FontWeight.Bold)

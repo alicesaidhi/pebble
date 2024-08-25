@@ -69,8 +69,12 @@ return function(props: props)
 			for i, s in sources do
 				local index = s()
 
-				if index > min_index and index < max_index then continue end
+				if
+					index > math.max(min_index, 1)
+					and index < math.min(max_index, max_items)
+				then continue end
 				unused[i] = true
+				s(-1)
 			end
 
 			-- add sources necessary
@@ -85,9 +89,10 @@ return function(props: props)
 			-- update indexes of any sources that went unused
 			local did_not_render = {}
 
-			for i = math.max(min_index, 0), math.min(max_index, max_items) do
+			for i = math.max(min_index, 1), math.min(max_index, max_items) do
 				did_not_render[i] = true
 			end
+			
 
 			for _, s in sources do
 				did_not_render[s()] = nil
@@ -104,10 +109,8 @@ return function(props: props)
 
 			-- remove unnecessary sources
 			if #sources > total_required then
-				print(#sources, total_required)
 				for i = #sources, 1, -1 do
 					if unused[i] then
-						print("removed")
 						table.remove(sources, i)
 					end
 					unused[i] = nil
@@ -150,7 +153,7 @@ return function(props: props)
 					if index() == -1 then UDim2.fromOffset(0, -1000) end
 					return UDim2.fromOffset(
 						0,
-						(item_size + separator_size) * index()
+						(item_size + separator_size) * (index() - 1)
 					)
 				end,
 				Size = UDim2.new(1, 0, 0, item_size + separator_size),

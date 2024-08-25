@@ -18,6 +18,10 @@ local MAX_SIZE = 100
 
 type can<T> = T | () -> T
 type dropdown = {
+	size: can<UDim2>?,
+	position: can<UDim2>?,
+	anchorpoint: can<Vector2>?,
+
 	selected: can<number>,
 	update_selected: (() -> number)?,
 
@@ -40,9 +44,9 @@ local function dropdown(props: dropdown)
 
 	return button {
 
-		size = UDim2.fromOffset(200, 32),
-		position = UDim2.fromScale(0.5, 0.5),
-		anchorpoint = Vector2.new(0.5, 0.5),
+		size = props.size or UDim2.fromOffset(200, 32),
+		position = props.position or UDim2.fromScale(0.5, 0.5),
+		anchorpoint = props.anchorpoint or Vector2.new(0.5, 0.5),
 
 		text = function()
 			return read(options)[read(selected)]
@@ -153,7 +157,6 @@ local function dropdown(props: dropdown)
 				}
 			}
 		}
-		
 
 	}
 	

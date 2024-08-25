@@ -80,7 +80,7 @@ return function(props: props)
         AnchorPoint = props.anchorpoint,
 
         Interactable = function()
-            return not props.disabled 
+            return not read(props.disabled)
         end,
 
         BackgroundColor3 = anim(bg),
@@ -94,6 +94,7 @@ return function(props: props)
 
             position = UDim2.fromScale(0.5, 0.5),
             anchorpoint = Vector2.new(0.5, 0.5),
+            size = UDim2.fromScale(1, 1),
             automaticsize = Enum.AutomaticSize.XY,
 
             text = props.text,

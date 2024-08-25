@@ -18,6 +18,7 @@ type props = {
     position: can<UDim2>?,
     anchorpoint: can<UDim2>?,
     
+    text: can<string>?,
     placeholder: can<string>?,
 
     disabled: can<boolean>?,
@@ -40,6 +41,10 @@ return function(props: props)
     local focused = source(false)
     local textbox = source() :: vide.Source<TextBox>
     local text = source("")
+
+    effect(function()
+        text(read(props.text) or "")
+    end)
 
     local function bg()
         local guistate = guistate()
@@ -120,6 +125,7 @@ return function(props: props)
             PlaceholderColor3 = theme.fg_on_bg_low[0],
 
             PlaceholderText = props.placeholder,
+            Text = props.text,
 
             ClipsDescendants = true,
 

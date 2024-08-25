@@ -2,6 +2,8 @@ local vide = require(script.Parent.Parent.Parent.Parent.vide)
 local theme = require(script.Parent.Parent.Parent.util.theme)
 local button = require(script.Parent.Parent.interactable.button)
 local padding = require(script.Parent.Parent.util.padding)
+local rounded_frame = require(script.Parent.Parent.util.rounded_frame)
+local shadow = require(script.Parent.Parent.util.shadow)
 local virtualscroller = require(script.Parent.Parent.util.virtualscroller)
 local scroll_frame = require(script.Parent.scroll_frame)
 local typography = require(script.Parent.typography)
@@ -24,6 +26,8 @@ type table = {
 	on_click: (column: number, row: number) -> (),
 	on_click2: (column: number, row: number) -> (),
 	read_value: (column: number, row: number) -> string,
+
+	below: {[number]: any}?,
 	
 	[number]: any
 
@@ -41,21 +45,23 @@ return function(props: table)
 
 	return scroll_frame {
 		Size = props.size or UDim2.new(1, 0, 0, 8 * 32),
-		CanvasSize = UDim2.fromOffset(combined_size(), 0),
-
-		BackgroundTransparency = 0,
-		BackgroundColor3 = theme.bg[0],
+		CanvasSize = function()
+			return UDim2.fromOffset(combined_size(), 0)
+		end,
 
 		create "UIListLayout" {
 			VerticalFlex = Enum.UIFlexAlignment.SpaceEvenly
 		},
 		
-		create "Frame" {
-			Size = function()
+		rounded_frame {
+			size = function()
 				return UDim2.new(1, 0, 0, 32)
 			end,
 
-			BackgroundColor3 = theme.bg[1],
+			topleft = UDim.new(0, 8),
+			topright = UDim.new(0, 8),
+
+			color = theme.bg[1],
 
 			padding {
 				padding = UDim.new(),
@@ -94,9 +100,9 @@ return function(props: table)
 					n += size + 8
 					table.insert(dividers, untrack(function()
 						return create "Frame" {
-							Size = UDim2.new(0, 1, 1, 0),
+							Size = UDim2.new(0, 1, 1, -32),
 							Position = function()
-								return UDim2.fromOffset(n - size - 8, 0)
+								return UDim2.fromOffset(n, 0)
 							end,
 		
 							BackgroundColor3 = theme.bg[-1],
@@ -115,6 +121,11 @@ return function(props: table)
 
 			create "UIFlexItem" {
 				FlexMode = Enum.UIFlexMode.Grow,
+			},
+
+			{
+				BackgroundColor3 = theme.bg[0],
+				BackgroundTransparency = 0,
 			},
 
 			item_size = 32,
@@ -139,12 +150,13 @@ return function(props: table)
 						return button {
 							size = function()
 								local column_sizes = props.column_sizes()
-								return UDim2.new(0, column_sizes[i] + 8, 0, 32)
+								if column_sizes[i] == nil then return UDim2.fromOffset(100, 32) end
+								return UDim2.fromOffset(column_sizes[i] + 8, 32)
 							end,
 							automaticsize = Enum.AutomaticSize.None,
 
 							text = function()
-								return props.read_value(i, index() + 2) or ""
+								return props.read_value(i, index() + 1) or ""
 							end,
 
 							create "UIListLayout" {
@@ -163,7 +175,7 @@ return function(props: table)
 							mouse2 = function()
 								props.on_click2(i, index() + 2)
 							end
-						}
+						} :: Instance
 					end)
 
 				}
@@ -171,10 +183,24 @@ return function(props: table)
 			end,
 
 			max_items = function()
-				return #props.columns()[1] - 2
+				local value = (props.columns()[1] ~= nil and #props.columns()[1] or 0)
+				return value - 1
 			end,
 			
 	
+		},
+
+		rounded_frame {
+			size = function()
+				return UDim2.new(1, 0, 0, 32)
+			end,
+
+			color = theme.bg[1],
+
+			props.below,
+
+			bottomleft = UDim.new(0, 8),
+			bottomright = UDim.new(0, 8),
 		},
 
 		unpack(props)

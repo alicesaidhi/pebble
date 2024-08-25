@@ -2,12 +2,14 @@ local background = require(script.components.display.background)
 local pages = require(script.components.display.pages)
 local pane = require(script.components.display.pane)
 local snapping = require(script.components.display.snapping)
+local tablesheet = require(script.components.display.tablesheet)
 local typography = require(script.components.display.typography)
 local widget = require(script.components.display.widget)
 local bargraph = require(script.components.graph.bargraph)
 local graph = require(script.components.graph.graph)
 local linegraph = require(script.components.graph.linegraph)
 local button = require(script.components.interactable.button)
+local select = require(script.components.interactable.select)
 local textfield = require(script.components.interactable.textfield)
 local gap = require(script.components.util.gap)
 local list = require(script.components.util.list)
@@ -24,6 +26,7 @@ return {
 	pane = pane,
 	snapping = snapping,
 	typography = typography,
+	tablesheet = tablesheet,
 
 	bargraph = bargraph,
 	graph = graph,
@@ -31,6 +34,7 @@ return {
 
 	button = button,
 	textfield = textfield,
+	select = select,
 
 	pages = pages,
 

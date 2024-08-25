@@ -27,7 +27,7 @@ type rounded_frame = {
 
 	layout: vide.vFrame?,
 
-	[number]: Instance,
+	[number]: any,
 }
 
 local function rounded_frame(props: rounded_frame)
