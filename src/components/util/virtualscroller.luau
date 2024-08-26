@@ -70,8 +70,8 @@ return function(props: props)
 				local index = s()
 
 				if
-					index > math.max(min_index, 1)
-					and index < math.min(max_index, max_items)
+					index >= math.max(min_index, 1)
+					and index <= math.min(max_index, max_items)
 				then continue end
 				unused[i] = true
 				s(-1)

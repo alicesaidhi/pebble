@@ -27,6 +27,8 @@ type props = {
 	text: can<string>,
 	textsize: can<number>?,
 
+	visible: can<boolean>?,
+
 	[number]: any
 
 }
@@ -74,6 +76,8 @@ return function(props: props)
 			else font()
 		end,
 		TextColor3 = anim(fg),
+
+		Visible = props.visible,
 
 		unpack(props)
 	}

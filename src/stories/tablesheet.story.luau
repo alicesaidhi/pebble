@@ -10,9 +10,9 @@ return function(target)
 	return vide.mount(function()
 
 		local columns = vide.source {
-			{"header", "meow", "mraow", "mrrrp", "purr"},
-			{"header", "meow", "mraow", "mrrrp", "purr"},
-			{"header", "meow", "mraow", "mrrrp", "purr"}
+			{"header", "meow", "mraow", "mrrrp", "purr", "ewewasfasdfasfwafweafweafweerwe", "a", "b", "c", "d"},
+			{"header", "meow", "mraow", "mrrrp", "purr", "ewewasfasdfasfwafweafweafweerwe", "a", "b", "c", "d"},
+			{"header", "meow", "mraow", "mrrrp", "purr", "ewewasfasdfasfwafweafweafweerwe", "a", "b", "c", "d"}
 		}
 		
 		return tablesheet {

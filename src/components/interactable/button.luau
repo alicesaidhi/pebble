@@ -16,6 +16,7 @@ type props = {
     size: can<UDim2>?,
     position: can<UDim2>?,
     anchorpoint: can<Vector2>?,
+    automaticsize: can<Enum.AutomaticSize>?,
 
     text: can<string>?,
     disabled: can<boolean>?,
@@ -30,6 +31,8 @@ type props = {
     --- enables the corner (enabled by default)
     corner: can<boolean>?,
     accent: can<boolean>?,
+
+    xalignment: can<Enum.TextXAlignment>?,
 
     code: can<boolean>?,
 
@@ -78,9 +81,10 @@ return function(props: props)
         Size = props.size or UDim2.fromOffset(100, 30),
         Position = props.position,
         AnchorPoint = props.anchorpoint,
+        AutomaticSize = props.automaticsize,
 
         Interactable = function()
-            return not read(props.disabled)
+            return not read(props.disabled) 
         end,
 
         BackgroundColor3 = anim(bg),
@@ -99,9 +103,14 @@ return function(props: props)
 
             text = props.text,
             truncate = Enum.TextTruncate.SplitWord,
+            xalignment = props.xalignment,
 
             accent = props.accent,
             disabled = props.disabled,
+
+            visible = function()
+                return read(props.text) ~= ""
+            end,
 
             code = props.code
 

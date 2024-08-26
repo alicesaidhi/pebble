@@ -194,6 +194,8 @@ return function(props: props)
 			Size = spring(function()
 				return if snapped() then UDim2.fromOffset(x_size() + 6, snap_size().Y.Offset) else UDim2.fromOffset(x_size() + 6, y_size() + 6)
 			end, 0.1),
+			
+			Active = true,
 
 			BackgroundColor3 = theme.bg[0],
 

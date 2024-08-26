@@ -21,6 +21,9 @@ type props = {
     text: can<string>?,
     placeholder: can<string>?,
 
+    multiline: can<boolean>?,
+    code: can<boolean>?,
+
     disabled: can<boolean>?,
 
     stroke: can<boolean>?,
@@ -102,6 +105,8 @@ return function(props: props)
 
             Size = UDim2.fromScale(1, 1),
 
+            MultiLine = props.multiline,
+
             BackgroundTransparency = 1,
 
             Focused = function()
@@ -120,7 +125,9 @@ return function(props: props)
             end,
 
             TextSize = theme.body,
-            FontFace = theme.font,
+            FontFace = function()
+                return if read(props.code) then theme.code else theme.font
+            end,
             TextColor3 = anim(fg),
             PlaceholderColor3 = theme.fg_on_bg_low[0],
 
@@ -130,6 +137,9 @@ return function(props: props)
             ClipsDescendants = true,
 
             TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = function()
+                return if read(props.multiline) then Enum.TextYAlignment.Top else Enum.TextYAlignment.Center
+            end,
 
             action(textbox),
             changed("Text", text),

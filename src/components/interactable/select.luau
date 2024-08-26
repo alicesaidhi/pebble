@@ -48,6 +48,8 @@ local function dropdown(props: dropdown)
 		position = props.position or UDim2.fromScale(0.5, 0.5),
 		anchorpoint = props.anchorpoint or Vector2.new(0.5, 0.5),
 
+		xalignment = Enum.TextXAlignment.Left,
+
 		text = function()
 			return read(options)[read(selected)]
 		end,
@@ -82,6 +84,8 @@ local function dropdown(props: dropdown)
 				end, 0.1),
 
 				BackgroundTransparency = 1,
+
+				BackgroundColor3 = theme.fg_on_bg_high[3],
 
 				Image = "rbxassetid://7260137654",
 				ImageColor3 = theme.fg_on_bg_low[3],

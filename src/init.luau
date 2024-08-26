@@ -15,7 +15,10 @@ local gap = require(script.components.util.gap)
 local list = require(script.components.util.list)
 local padding = require(script.components.util.padding)
 local row = require(script.components.util.row)
+local shadow = require(script.components.util.shadow)
 local virtualscroller = require(script.components.util.virtualscroller)
+local anim = require(script.util.anim)
+local oklch = require(script.util.oklch)
 local theme = require(script.util.theme)
 
 
@@ -39,13 +42,17 @@ return {
 	pages = pages,
 
 	theme = theme,
+	anim = anim,
 	
 	list = list,
 	row = row,
+	shadow = shadow,
 	
 	padding = padding,
 
 	virtualscroller = virtualscroller,
-	gap = gap
+	gap = gap,
+
+	oklch = oklch
 
 }

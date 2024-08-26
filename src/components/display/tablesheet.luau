@@ -153,7 +153,6 @@ return function(props: table)
 								if column_sizes[i] == nil then return UDim2.fromOffset(100, 32) end
 								return UDim2.fromOffset(column_sizes[i] + 8, 32)
 							end,
-							automaticsize = Enum.AutomaticSize.None,
 
 							text = function()
 								return props.read_value(i, index() + 1) or ""
@@ -163,6 +162,8 @@ return function(props: table)
 								FillDirection = Enum.FillDirection.Horizontal,
 								VerticalAlignment = Enum.VerticalAlignment.Center
 							},
+
+							xalignment = Enum.TextXAlignment.Left,
 
 							corner = false,
 							stroke = false,
