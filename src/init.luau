@@ -1,4 +1,6 @@
+local accordion = require(script.components.display.accordion)
 local background = require(script.components.display.background)
+local divider = require(script.components.display.divider)
 local pages = require(script.components.display.pages)
 local pane = require(script.components.display.pane)
 local snapping = require(script.components.display.snapping)
@@ -11,9 +13,11 @@ local linegraph = require(script.components.graph.linegraph)
 local button = require(script.components.interactable.button)
 local select = require(script.components.interactable.select)
 local textfield = require(script.components.interactable.textfield)
+local container = require(script.components.util.container)
 local gap = require(script.components.util.gap)
 local list = require(script.components.util.list)
 local padding = require(script.components.util.padding)
+local rounded_frame = require(script.components.util.rounded_frame)
 local row = require(script.components.util.row)
 local shadow = require(script.components.util.shadow)
 local virtualscroller = require(script.components.util.virtualscroller)
@@ -30,6 +34,8 @@ return {
 	snapping = snapping,
 	typography = typography,
 	tablesheet = tablesheet,
+	accordion = accordion,
+	divider = divider,
 
 	bargraph = bargraph,
 	graph = graph,
@@ -44,6 +50,8 @@ return {
 	theme = theme,
 	anim = anim,
 	
+	container = container,
+	rounded_frame = rounded_frame,
 	list = list,
 	row = row,
 	shadow = shadow,
