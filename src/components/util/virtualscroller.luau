@@ -44,81 +44,83 @@ return function(props: props)
 	local item = props.item
 	local separator = props.separator
 
-	local OVERFLOW_ONE_SIDE = 4
+	local OVERFLOW = 4
 
 	effect(function()
 		local absolute_size = absolute_size()
 		local canvas_position = canvas_position()
 
 		local child_size = item_size + separator_size
-		local total_required = math.ceil(absolute_size.Y / child_size) + OVERFLOW_ONE_SIDE * 2
+		local total_required = math.ceil(absolute_size.Y / child_size) + OVERFLOW
 		local sources = untrack(items)
 
-		local min_index = math.floor(canvas_position.Y / child_size) - OVERFLOW_ONE_SIDE
-		local max_index = math.ceil((canvas_position.Y + absolute_size.Y) / child_size) + OVERFLOW_ONE_SIDE
+		local min_index = math.floor(canvas_position.Y / child_size)
+		local max_index = math.ceil((canvas_position.Y + absolute_size.Y) / child_size)
 
 		local max_items = math.huge
 		if props.max_items then
 			max_items = props.max_items()
 		end
 
-		untrack(function()
-			-- mark any sources out of range as unused
-			local unused = {}
+		batch(function()
+			untrack(function()
+				-- mark any sources out of range as unused
+				local unused = {}
 
-			for i, s in sources do
-				local index = s()
+				for i, s in sources do
+					local index = s()
 
-				if
-					index >= math.max(min_index, 1)
-					and index <= math.min(max_index, max_items)
-				then continue end
-				unused[i] = true
-				s(-1)
-			end
-
-			-- add sources necessary
-			if #sources < total_required then
-				for i = #sources + 1, total_required do
-					sources[i] = source(-1)
+					if
+						index >= math.max(min_index, 1)
+						and index <= math.min(max_index, max_items)
+					then continue end
 					unused[i] = true
+					s(-1)
 				end
-				items(sources)
-			end
 
-			-- update indexes of any sources that went unused
-			local did_not_render = {}
-
-			for i = math.max(min_index, 1), math.min(max_index, max_items) do
-				did_not_render[i] = true
-			end
-			
-
-			for _, s in sources do
-				did_not_render[s()] = nil
-			end
-
-			for index in unused do
-				local s = sources[index]
-				local key = next(did_not_render)
-				if not key then break end
-				s(key)
-				did_not_render[key] = nil
-				unused[index] = nil
-			end
-
-			-- remove unnecessary sources
-			if #sources > total_required then
-				for i = #sources, 1, -1 do
-					if unused[i] then
-						table.remove(sources, i)
+				-- add sources necessary
+				if #sources < total_required then
+					for i = #sources + 1, total_required do
+						sources[i] = source(-1)
+						unused[i] = true
 					end
-					unused[i] = nil
-					if #sources < total_required then break end
+					items(sources)
 				end
-				items(sources)
-			end
 
+				-- update indexes of any sources that went unused
+				local did_not_render = {}
+
+				for i = math.max(min_index, 1), math.min(max_index, max_items) do
+					did_not_render[i] = true
+				end
+				
+
+				for _, s in sources do
+					did_not_render[s()] = nil
+				end
+
+				for index in unused do
+					local s = sources[index]
+					local key = next(did_not_render)
+					if not key then break end
+					s(key)
+					did_not_render[key] = nil
+					unused[index] = nil
+				end
+
+				-- remove unnecessary sources
+				if #sources > total_required then
+					for i = #sources, 1, -1 do
+						if unused[i] then
+							table.remove(sources, i)
+						end
+						unused[i] = nil
+						if #sources < total_required then break end
+					end
+					items(sources)
+				end
+
+			end)
 		end)
 
 	end)
@@ -140,7 +142,7 @@ return function(props: props)
 				local absolute_size = absolute_size()
 				local canvas_position = canvas_position()
 				local child_size = item_size + separator_size
-				local max_index = math.ceil((canvas_position.Y + absolute_size.Y) / child_size) + OVERFLOW_ONE_SIDE
+				local max_index = math.ceil((canvas_position.Y + absolute_size.Y) / child_size) + OVERFLOW
 				return UDim2.fromOffset(0, max_index * child_size)
 			end
 		end,
