@@ -1,9 +1,9 @@
 [package]
 name = "alicesaidhi/pebble"
 exclude = ["aftman.toml", "test.project.json", "src/stories"]
-version = "0.1.0-rc.6"
+version = "0.1.0-rc.7"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
-vide = "aloroid/vide-with-types@0.2.7"
+vide = "centau/vide@0.3.1"
