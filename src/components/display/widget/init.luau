@@ -187,13 +187,13 @@ return function(props: props)
 		reference(ref),
 
 		create "Frame" {
-			Position = spring(function()
+			Position = function()
 				return if snapped() then snap_pos() else UDim2.fromOffset(x_position(), y_position())
-			end, 0.1),
+			end,
 
-			Size = spring(function()
+			Size = function()
 				return if snapped() then UDim2.fromOffset(x_size() + 6, snap_size().Y.Offset) else UDim2.fromOffset(x_size() + 6, y_size() + 6)
-			end, 0.1),
+			end,
 			
 			Active = true,
 
