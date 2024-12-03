@@ -3,12 +3,15 @@ local theme = require(script.Parent.Parent.Parent.util.theme)
 local button = require(script.Parent.Parent.interactable.button)
 local padding = require(script.Parent.Parent.util.padding)
 local rounded_frame = require(script.Parent.Parent.util.rounded_frame)
-local shadow = require(script.Parent.Parent.util.shadow)
 local virtualscroller = require(script.Parent.Parent.util.virtualscroller)
+local resizeable_bar = require(script.Parent.resizeable_bar)
 local scroll_frame = require(script.Parent.scroll_frame)
 local typography = require(script.Parent.typography)
 
 local create = vide.create
+local source = vide.source
+local derive = vide.derive
+local effect = vide.effect
 local indexes = vide.indexes
 local untrack = vide.untrack
 
@@ -17,11 +20,8 @@ type table = {
 
 	size: can<UDim2>?,
 
-	-- the size of each column in pixels
-	column_sizes: () -> {number},
-
+	base_splits: { number } ,
 	columns: () -> {{any}},
-	max_characters_per_column: number?,
 
 	on_click: (column: number, row: number) -> (),
 	on_click2: (column: number, row: number) -> (),
@@ -35,85 +35,59 @@ type table = {
 
 return function(props: table)
 
-	local function combined_size()
-		local size = 8
-		for _, column in props.column_sizes() do
-			size += column + 8
+	local sizes = source({})
+	local splits = source({})
+
+	local meaning = derive(function()
+		local t = {}
+
+		for i, column in props.columns() do
+			t[i] = column[1]
 		end
+
+		return t
+	end)
+
+	local function get_size(index: number)
+		local split_before = splits()[index - 1] or source(0) :: never
+		local split_after = splits()[index] or source(1) :: never
+
+		local size = split_after() - split_before()
 		return size
 	end
 
 	return scroll_frame {
 		Size = props.size or UDim2.new(1, 0, 0, 8 * 32),
 		CanvasSize = function()
-			return UDim2.fromOffset(combined_size(), 0)
+			return UDim2.new(1, 0)
 		end,
 
 		create "UIListLayout" {
 			VerticalFlex = Enum.UIFlexAlignment.SpaceEvenly
 		},
 		
-		rounded_frame {
-			size = function()
-				return UDim2.new(1, 0, 0, 32)
-			end,
-
-			topleft = UDim.new(0, 8),
-			topright = UDim.new(0, 8),
-
-			color = theme.bg[1],
-
-			padding {
-				padding = UDim.new(),
-				left = UDim.new(0, 8)
-			},
-
-			create "UIListLayout" {
-				FillDirection = Enum.FillDirection.Horizontal,
-				Padding = UDim.new(0, 0)
-			},
-
-			indexes(props.columns, function(column, i)
-				return typography {
-					size = function()
-						local column_sizes = props.column_sizes()
-						return UDim2.new(0, column_sizes[i] + 8, 0, 32)
-					end,
-					automaticsize = Enum.AutomaticSize.None,
-					text = function()
-						return column()[1] or ""
-					end,
-					xalignment = Enum.TextXAlignment.Left,
-					header = true,
-					textsize = 18,
-				}
-			end)
-
+		resizeable_bar {
+			meaning = meaning,
+			sizes = sizes,
+			splits = splits,
+			base_splits = props.base_splits
 		},
 
 		create "Folder" {
 
-			function()
-				local dividers = {}
-				local n = 0
-				for i, size in props.column_sizes() do
-					n += size + 8
-					table.insert(dividers, untrack(function()
-						return create "Frame" {
-							Size = UDim2.new(0, 1, 1, -32),
-							Position = function()
-								return UDim2.fromOffset(n, 0)
-							end,
-		
-							BackgroundColor3 = theme.bg[-1],
+			indexes(meaning, function(_, i)
+				return create "Frame" {
+					Size = UDim2.new(0, 1, 1, -32),
+					Position = function()
+						local pos = splits()[i]
+						return if not pos then UDim2.fromScale(0, 0) else UDim2.fromScale(pos(), 0)
+					end,
 
-							ZIndex = 100
-						}
-					end))
-				end
+					BackgroundColor3 = theme.bg[-1],
 
-				return dividers
-			end
+					ZIndex = 100
+				}
+			end)
 		},
 
 		virtualscroller {
@@ -149,9 +123,8 @@ return function(props: table)
 					indexes(props.columns, function(column, i)
 						return button {
 							size = function()
-								local column_sizes = props.column_sizes()
-								if column_sizes[i] == nil then return UDim2.fromOffset(100, 32) end
-								return UDim2.fromOffset(column_sizes[i] + 8, 32)
+								local column_size = get_size(i)
+								return UDim2.new(column_size, 0, 0, 32)
 							end,
 
 							text = function()
