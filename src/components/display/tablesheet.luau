@@ -99,6 +99,7 @@ return function(props: table)
 
 			{
 				BackgroundColor3 = theme.bg[0],
+				VerticalScrollBarInset = Enum.ScrollBarInset.None,
 				BackgroundTransparency = 0,
 			},
 

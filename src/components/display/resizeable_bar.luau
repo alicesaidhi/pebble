@@ -114,17 +114,13 @@ return function(props: ResizeableBar)
             BackgroundTransparency = 1,
             Text = "",
 
-            padding {
-                padding = UDim.new(),
-                left = UDim.new(0, 8)
+            create "UIListLayout" {
+                FillDirection = Enum.FillDirection.Horizontal,
+                Padding = UDim.new(0, 0)
             },
 
             indexes(meaning, function(column, i)
                 return typography {
-                    position = function()
-                        local split_before = splits()[i - 1] or BEFORE
-                        return UDim2.fromScale(split_before(), 0)
-                    end,
                     size = function()
                         return UDim2.fromScale(get_size(i), 1)
                     end,
@@ -135,6 +131,8 @@ return function(props: ResizeableBar)
                     xalignment = Enum.TextXAlignment.Left,
                     header = true,
                     textsize = 18,
+
+                    padding {x = UDim.new(0, 8)}
                 }
             end),
 

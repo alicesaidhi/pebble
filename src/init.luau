@@ -25,7 +25,6 @@ local anim = require(script.util.anim)
 local oklch = require(script.util.oklch)
 local theme = require(script.util.theme)
 
-
 return {
 
 	widget = widget,
@@ -61,6 +60,6 @@ return {
 	virtualscroller = virtualscroller,
 	gap = gap,
 
-	oklch = oklch
+	oklch = oklch,
 
 }
