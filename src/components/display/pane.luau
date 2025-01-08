@@ -27,34 +27,24 @@ type props = {
 return function(props: props)
 
 	return create "Frame" {
-
 		Name = props.name,
-
 		Size = props.size or UDim2.fromScale(1, 0),
 		Position = props.position,
 		AnchorPoint = props.anchorpoint,
 		LayoutOrder = props.layoutorder,
 		AutomaticSize = props.automaticsize or Enum.AutomaticSize.Y,
-
-
 		BackgroundColor3 = theme.bg[0],
 
 		create "UICorner" {
 			CornerRadius = UDim.new(0, 8)
 		},
-
 		create "UIStroke" {
-
 			Color = theme.bg[-3]
-
 		},
-
 		show(function()
 			return if read(props.name) then #read(props.name) > 0 else false
 		end, function()
-			
 			return background {
-
 				size = UDim2.new(),
 				position = UDim2.fromOffset(4, -16),
 				automaticsize = Enum.AutomaticSize.XY,
@@ -67,13 +57,10 @@ return function(props: props)
 				},
 
 				padding {x = UDim.new(0, 2), y = UDim.new()}
-
 			}
-
 		end),
 
 		padding {},
-
 		list {
 			unpack(props)
 		}

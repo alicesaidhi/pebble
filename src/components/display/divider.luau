@@ -11,16 +11,12 @@ type props = {
 }
 
 return function(props: props)
-
+	
 	return create "Frame" {
-
 		BackgroundColor3 = theme.bg[-2],
-
+		Position = props.position,
 		Size = function()
 			return UDim2.new(1, 0, 0, read(props.thickness) or 1)
 		end,
-		Position = props.position
-
 	}
-
 end

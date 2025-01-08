@@ -24,7 +24,6 @@ type Background = {
 return function(props: Background)
 
     return create "Frame" {
-
         Position = props.position,
         Size = props.size or UDim2.fromScale(1, 1),
         AnchorPoint = props.anchorpoint,

@@ -17,11 +17,14 @@ return function(target)
 		
 		return tablesheet {
 			column_sizes = vide.source {100, 200, 100},
+			suggested_column_sizes = { 0.1},
 			columns = columns,
 
 			read_value = function(column, row)
 				return columns()[column][row]
 			end,
+			on_click = print,
+			on_click2 = print,
 
 			max_characters_per_column = 40
 

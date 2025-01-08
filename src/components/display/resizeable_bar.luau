@@ -13,6 +13,7 @@ local effect = vide.effect
 local cleanup = vide.cleanup
 local indexes = vide.indexes
 local changed = vide.changed
+local untrack = vide.untrack
 
 local MAX_PIXELS_OFFSET = 32
 
@@ -23,6 +24,7 @@ type ResizeableBar = {
     meaning: () -> { string },
     min_sizes: (() -> { vide.source<number>? })?,
     sizes: vide.source<{ vide.source<number> }>,
+    suggested_sizes: { number }?,
 
     splits: (vide.source<{ vide.source<number> }>)?,
     base_splits: { number }?
@@ -33,6 +35,7 @@ return function(props: ResizeableBar)
     local meaning = props.meaning
 	local sizes = props.sizes
 	local min_sizes = props.min_sizes or source({}) :: never
+    local suggested_sizes = props.suggested_sizes or {}
 
 	local absolute_size = source(Vector2.one)
 	local absolute_position = source(Vector2.one)
@@ -51,7 +54,7 @@ return function(props: ResizeableBar)
 
 		for i = 1, total_columns() - 1 do
 			local old_split = vide.read(previous and previous[i] or nil)
-			new[i] = source(math.min(old_split or 1, i / total_columns()))
+			new[i] = source(math.min(if old_split and old_split ~= 1 then old_split else suggested_sizes[i] or 1, i / total_columns()))
 		end
 
 		splits(new)
@@ -84,15 +87,13 @@ return function(props: ResizeableBar)
 
 		for i = 1, total() do
 			min_sizes()[i] = min_sizes()[i] or source(0.025)
-
-			vide.untrack(function()
+			untrack(function()
 				new[i] = derive(function()
 					return get_size(i)
 				end)
 			end)
 		end
 
-        print("update")
 		sizes(new :: any)
 	end)
 
@@ -103,10 +104,8 @@ return function(props: ResizeableBar)
         size = function()
             return UDim2.new(1, 0, 0, 32)
         end,
-
         topleft = UDim.new(0, 8),
         topright = UDim.new(0, 8),
-
         color = theme.bg[1],
 
         create "TextButton" {
@@ -129,6 +128,7 @@ return function(props: ResizeableBar)
                         return column() or ""
                     end,
                     xalignment = Enum.TextXAlignment.Left,
+                    truncate = Enum.TextTruncate.AtEnd,
                     header = true,
                     textsize = 18,
 

@@ -1,26 +1,22 @@
 local vide = require(script.Parent.Parent.Parent.Parent.vide)
 local theme = require(script.Parent.Parent.Parent.util.theme)
 local button = require(script.Parent.Parent.interactable.button)
-local padding = require(script.Parent.Parent.util.padding)
 local rounded_frame = require(script.Parent.Parent.util.rounded_frame)
 local virtualscroller = require(script.Parent.Parent.util.virtualscroller)
 local resizeable_bar = require(script.Parent.resizeable_bar)
 local scroll_frame = require(script.Parent.scroll_frame)
-local typography = require(script.Parent.typography)
 
 local create = vide.create
 local source = vide.source
 local derive = vide.derive
-local effect = vide.effect
 local indexes = vide.indexes
-local untrack = vide.untrack
 
 type can<T> = T | () -> T
 type table = {
-
 	size: can<UDim2>?,
+	suggested_column_sizes: { number }?,
 
-	base_splits: { number } ,
+	base_splits: { number }?,
 	columns: () -> {{any}},
 
 	on_click: (column: number, row: number) -> (),
@@ -30,11 +26,9 @@ type table = {
 	below: {[number]: any}?,
 	
 	[number]: any
-
 }
 
 return function(props: table)
-
 	local sizes = source({})
 	local splits = source({})
 
@@ -70,7 +64,8 @@ return function(props: table)
 			meaning = meaning,
 			sizes = sizes,
 			splits = splits,
-			base_splits = props.base_splits
+			base_splits = props.base_splits,
+			suggested_sizes = props.suggested_column_sizes
 		},
 
 		create "Folder" {
@@ -179,7 +174,5 @@ return function(props: table)
 		},
 
 		unpack(props)
-
 	}
-
 end

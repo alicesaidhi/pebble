@@ -18,14 +18,12 @@ local cleanup = vide.cleanup
 
 type can<T> = T | () -> T
 type props = {
-
 	labels: () -> {
 		{
 			title: string,
 			ui: () -> Instance | {Instance}
 		}
 	}
-
 }
 
 return function(props: props)
@@ -38,7 +36,6 @@ return function(props: props)
 
 		create "Frame" {
 			Size = UDim2.new(1, 0, 0, 32),
-
 			BackgroundColor3 = theme.bg[3],
 
 			divider {
@@ -54,12 +51,9 @@ return function(props: props)
 					local guistate = source(Enum.GuiState.Idle)
 	
 					return rounded_frame {
-	
 						name = key,
-					
 						size = UDim2.fromOffset(50, 30),
 						automaticsize = Enum.AutomaticSize.X,
-	
 						topleft = UDim.new(0, 4),
 						topright = UDim.new(0, 4),
 	
@@ -70,11 +64,8 @@ return function(props: props)
 						end,
 	
 						create "TextButton" {
-	
 							Size = UDim2.fromScale(1, 1),
-	
 							BackgroundTransparency = 1,
-	
 							Activated = function()
 								selected(key)
 							end,
@@ -98,9 +89,7 @@ return function(props: props)
 							},
 					
 							changed("GuiState", guistate)
-					
 						}
-	
 					}
 				end),
 			},

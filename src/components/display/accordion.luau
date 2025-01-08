@@ -33,7 +33,6 @@ return function(props: props)
 
 		create "ImageButton" {
 			Name = "Accordion",
-			
 			Size = UDim2.new(1, 0, 0, 32),
 
 			BackgroundColor3 = spring(function()
@@ -46,7 +45,6 @@ return function(props: props)
 			end, 0.1),
 
 			padding {x = UDim.new(0, 8)},
-
 			create "UIListLayout" {
 				FillDirection = Enum.FillDirection.Horizontal,
 				HorizontalFlex = Enum.UIFlexAlignment.SpaceBetween,
