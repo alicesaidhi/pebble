@@ -119,7 +119,7 @@ local function dropdown(props: dropdown)
 				scroll_frame {
 					Size = UDim2.fromScale(1, 1),
 					ScrollBarThickness = 4,
-					AutomaticSize = Enum.AutomaticSize.Y,
+					AutomaticCanvasSize = Enum.AutomaticSize.Y,
 
 					list {
 						spacing = UDim.new(0, 1),
