@@ -1,5 +1,6 @@
 local accordion = require(script.components.display.accordion)
 local background = require(script.components.display.background)
+local checkbox = require(script.components.display.checkbox)
 local divider = require(script.components.display.divider)
 local pages = require(script.components.display.pages)
 local pane = require(script.components.display.pane)
@@ -35,6 +36,7 @@ return {
 	tablesheet = tablesheet,
 	accordion = accordion,
 	divider = divider,
+	checkbox = checkbox,
 
 	bargraph = bargraph,
 	graph = graph,
