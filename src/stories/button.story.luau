@@ -1,10 +1,13 @@
 local vide = require(script.Parent.Parent.Parent.vide)
+local checkbox = require(script.Parent.Parent.components.display.checkbox)
 local button = require(script.Parent.Parent.components.interactable.button)
 
 local create = vide.create
 return function(target)
 
 	return vide.mount(function()
+		local checked = vide.source(false)
+
 		return {
 			create "UIListLayout" {
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,
@@ -21,7 +24,7 @@ return function(target)
 	
 				text = "hello!",
 	
-				accent = true
+				accent = true,
 	
 			},
 			button {
@@ -31,7 +34,21 @@ return function(target)
 	
 				text = "hello!",
 	
-				accent = false
+				accent = false,
+				
+				create "UIListLayout" {
+					FillDirection = Enum.FillDirection.Horizontal,
+					HorizontalAlignment = Enum.HorizontalAlignment.Center,
+					VerticalAlignment = Enum.VerticalAlignment.Center,
+				},
+
+				checkbox {
+					checked = checked,
+					layoutorder = -1
+				},
+				activated = function()
+					checked(not checked())
+				end
 	
 			},
 
