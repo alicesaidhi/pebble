@@ -15,6 +15,7 @@ return function(props: props)
 	return create "Frame" {
 		BackgroundColor3 = theme.bg[-2],
 		Position = props.position,
+		AutoLocalize = false,
 		Size = function()
 			return UDim2.new(1, 0, 0, read(props.thickness) or 1)
 		end,

@@ -46,6 +46,7 @@ return function()
 
 		return create "Frame" {
 			Name = "SnapArea",
+			AutoLocalize = false,
 			Size = UDim2.fromScale(1, 1),
 
 			BackgroundTransparency = 1,

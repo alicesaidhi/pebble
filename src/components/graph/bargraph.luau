@@ -42,6 +42,7 @@ return function(props: props)
 		indexes(props.values, function(value, index)
 			
 			return create "Frame" {
+				AutoLocalize = false,
 
 				Position = function()
 					return UDim2.fromScale((index - 1) / total(), 1)

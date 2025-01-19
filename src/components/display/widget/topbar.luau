@@ -50,6 +50,7 @@ return function(props: props)
 
 		create "ImageButton" {
 			Size = UDim2.fromScale(1, 1),
+			AutoLocalize = false,
 			BackgroundTransparency = 1,
 			ZIndex = 1000,
 	
@@ -125,6 +126,7 @@ return function(props: props)
 						Size = UDim2.fromOffset(24, 24),
 						Position = UDim2.fromScale(0.5, 0.5),
 						AnchorPoint = Vector2.new(0.5, 0.5),
+						AutoLocalize = false,
 	
 						BackgroundTransparency = 1,
 

@@ -36,6 +36,7 @@ return function(props: props)
 
 		create "Frame" {
 			Size = UDim2.new(1, 0, 0, 32),
+			AutoLocalize = false,
 			BackgroundColor3 = theme.bg[3],
 
 			divider {
@@ -65,7 +66,9 @@ return function(props: props)
 	
 						create "TextButton" {
 							Size = UDim2.fromScale(1, 1),
+							AutoLocalize = false,
 							BackgroundTransparency = 1,
+							
 							Activated = function()
 								selected(key)
 							end,
@@ -99,8 +102,8 @@ return function(props: props)
 		},
 		
 		create "Frame" {
-
 			Size = UDim2.new(1, 0, 1, 0),
+			AutoLocalize = false,
 
 			BackgroundColor3 = theme.bg[0],
 

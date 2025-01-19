@@ -75,6 +75,7 @@ local function dropdown(props: dropdown)
 			create "ImageLabel" {
 
 				Name = "arrow",
+				AutoLocalize = false,
 
 				Size = UDim2.new(0, 8, 0, 4),
 				Position = UDim2.fromScale(0.5, 0.5),
@@ -118,11 +119,7 @@ local function dropdown(props: dropdown)
 				scroll_frame {
 					Size = UDim2.fromScale(1, 1),
 					ScrollBarThickness = 4,
-
-					padding {
-						padding = UDim.new(),
-						bottom = UDim.new(0, 6)
-					},
+					AutomaticSize = Enum.AutomaticSize.Y,
 
 					list {
 						spacing = UDim.new(0, 1),

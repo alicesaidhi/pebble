@@ -33,6 +33,7 @@ return function(props: props)
 
 		create "ImageButton" {
 			Name = "Accordion",
+			AutoLocalize = false,
 			Size = UDim2.new(1, 0, 0, 32),
 
 			BackgroundColor3 = spring(function()
@@ -61,6 +62,7 @@ return function(props: props)
 				create "ImageLabel" {
 					Size = UDim2.fromOffset(16, 16),
 					BackgroundTransparency = 1,
+					AutoLocalize = false,
 					Image = CHEVRON_DOWN,
 	
 					Rotation = spring(function()

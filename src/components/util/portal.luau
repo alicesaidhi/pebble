@@ -56,6 +56,7 @@ local function portal(props: portal)
 
 			Name = `Portal:{layout}`,
 			Parent = nearest_layer_collector,
+			AutoLocalize = false,
 			ZIndex = layout,
 
 			Size = function()

@@ -84,6 +84,7 @@ return function(props: props)
     return create "TextButton" {
 
         Name = props.placeholder or "Textbox",
+        AutoLocalize = false,
 
         Size = props.size or UDim2.fromOffset(300, 30),
         Position = props.position,
@@ -104,6 +105,7 @@ return function(props: props)
         create "TextBox" {
 
             Size = UDim2.fromScale(1, 1),
+			AutoLocalize = false,
 
             MultiLine = props.multiline,
 

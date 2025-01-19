@@ -28,6 +28,7 @@ return function(props: Background)
         Size = props.size or UDim2.fromScale(1, 1),
         AnchorPoint = props.anchorpoint,
         AutomaticSize = props.automaticsize,
+        AutoLocalize = false,
 
         LayoutOrder = props.layoutorder,
 

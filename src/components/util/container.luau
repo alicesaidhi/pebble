@@ -12,6 +12,7 @@ local function container(props: vide.vFrame)
 	return create "Frame" {
 
 		Name = "Container",
+		AutoLocalize = false,
 		
 		Size = UDim2.fromScale(1, 1),
 

@@ -34,6 +34,7 @@ return function(props: props)
 		LayoutOrder = props.layoutorder,
 		AutomaticSize = props.automaticsize or Enum.AutomaticSize.Y,
 		BackgroundColor3 = theme.bg[0],
+		AutoLocalize = false,
 
 		create "UICorner" {
 			CornerRadius = UDim.new(0, 8)

@@ -8,7 +8,7 @@ type props = vide.vScrollingFrame
 return function(props: props)
 
 	return create "ScrollingFrame" {
-
+		AutoLocalize = false,
 		ScrollBarThickness = 6,
 		ScrollBarImageColor3 = theme.fg_on_bg_low[0],
 		CanvasSize = UDim2.new(),

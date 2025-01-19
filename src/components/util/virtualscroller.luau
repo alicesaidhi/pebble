@@ -150,6 +150,7 @@ return function(props: props)
 		values(items, function(index)
 			return create "Frame" {
 				Name = index,
+				AutoLocalize = false,
 
 				Position = function()
 					if index() == -1 then UDim2.fromOffset(0, -1000) end

@@ -39,6 +39,7 @@ local function rounded_frame(props: rounded_frame)
 	local function corner(name: string, position: UDim2, anchor_point: Vector2, udim: can<UDim>)
 		return create "Frame" {
 			Name = name,
+			AutoLocalize = false,
 
 			Size = function()
 				return UDim2.new(read(udim), read(udim))
@@ -51,6 +52,7 @@ local function rounded_frame(props: rounded_frame)
 
 			create "Frame" {
 				Name = "TopLeft",
+				AutoLocalize = false,
 	
 				Size = UDim2.fromScale(2, 2),
 				Position = UDim2.fromScale(-anchor_point.X, -anchor_point.Y),
@@ -86,6 +88,7 @@ local function rounded_frame(props: rounded_frame)
 			corner("BottomRight", UDim2.fromScale(1, 1), Vector2.new(1, 1), bottomright),
 		
 			create "Frame" {
+				AutoLocalize = false,
 				
 				Name = "FrameLeft",
 
@@ -112,6 +115,7 @@ local function rounded_frame(props: rounded_frame)
 			create "Frame" {
 				
 				Name = "FrameRight",
+				AutoLocalize = false,
 
 				Size = function()
 					return UDim2.new(
@@ -136,6 +140,7 @@ local function rounded_frame(props: rounded_frame)
 			create "Frame" {
 				
 				Name = "FrameTop",
+				AutoLocalize = false,
 
 				Size = function()
 					return UDim2.new(
@@ -160,6 +165,7 @@ local function rounded_frame(props: rounded_frame)
 			create "Frame" {
 				
 				Name = "FrameBottom",
+				AutoLocalize = false,
 
 				Size = function()
 					return UDim2.new(

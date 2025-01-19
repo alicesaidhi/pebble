@@ -111,6 +111,7 @@ return function(props: ResizeableBar)
         create "TextButton" {
             Size = UDim2.fromScale(1, 1),
             BackgroundTransparency = 1,
+			AutoLocalize = false,
             Text = "",
 
             create "UIListLayout" {

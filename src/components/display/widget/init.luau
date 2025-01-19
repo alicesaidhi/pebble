@@ -46,6 +46,7 @@ vide.mount(function()
 
 	return create "ScreenGui" {
 		Name = "docks",
+		AutoLocalize = false,
 		
 		-- create "Frame" {
 		-- 	Size = UDim2.new(1, 0, 0, 200),
@@ -67,6 +68,7 @@ vide.mount(function()
 		create "Frame" {
 			Size = UDim2.new(0, 16, 1, 0),
 			BackgroundTransparency = 1,
+			AutoLocalize = false,
 	
 			docks.snap_area {}
 		},
@@ -183,10 +185,12 @@ return function(props: props)
 	
 	return create "ScreenGui" {
 		Name = props.title,
+		AutoLocalize = false,
 		DisplayOrder = display_order,
 		reference(ref),
 
 		create "Frame" {
+			AutoLocalize = false,
 			Position = function()
 				return if snapped() then snap_pos() else UDim2.fromOffset(x_position(), y_position())
 			end,

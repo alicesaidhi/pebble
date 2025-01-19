@@ -57,6 +57,7 @@ return function(props: props)
 		Position = props.position,
 		AnchorPoint = props.anchorpoint,
 		AutomaticSize = props.automaticsize or Enum.AutomaticSize.XY,
+		AutoLocalize = false,
 
 		TextXAlignment = props.xalignment,
 		TextYAlignment = props.yalignment,

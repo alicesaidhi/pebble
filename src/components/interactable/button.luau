@@ -77,6 +77,7 @@ return function(props: props)
     return create "TextButton" {
 
         Name = props.text,
+        AutoLocalize = false,
 
         Size = props.size or UDim2.fromOffset(100, 30),
         Position = props.position,

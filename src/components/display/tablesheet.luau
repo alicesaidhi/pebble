@@ -73,6 +73,7 @@ return function(props: table)
 			indexes(meaning, function(_, i)
 				return create "Frame" {
 					Size = UDim2.new(0, 1, 1, -32),
+					AutoLocalize = false,
 					Position = function()
 						local pos = splits()[i]
 						return if not pos then UDim2.fromScale(0, 0) else UDim2.fromScale(pos(), 0)
@@ -102,8 +103,8 @@ return function(props: table)
 			item = function(index)
 				
 				return create "Frame" {
-
 					Size = UDim2.new(1, 0, 0, 32),
+					AutoLocalize = false,
 
 					BackgroundColor3 = theme.bg[2],
 
