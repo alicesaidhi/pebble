@@ -99,7 +99,8 @@ return function(props: props)
 
             position = UDim2.fromScale(0.5, 0.5),
             anchorpoint = Vector2.new(0.5, 0.5),
-            automaticsize = Enum.AutomaticSize.XY,
+            size = UDim2.fromScale(1, 1),
+            automaticsize = Enum.AutomaticSize.Y,
 
             text = props.text,
             truncate = Enum.TextTruncate.SplitWord,
