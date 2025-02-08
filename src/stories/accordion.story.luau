@@ -10,7 +10,16 @@ return function(target)
 	return vide.mount(function()
 		local expanded = vide.source(true)
 		return background {
+			vide.create "UIListLayout" {},
 			padding {},
+
+			accordion {
+				expanded = expanded,
+				set_expanded = expanded,
+				text = "accordion 1",
+
+				button {}
+			},
 
 			accordion {
 				expanded = expanded,

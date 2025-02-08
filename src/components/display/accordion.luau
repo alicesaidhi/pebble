@@ -28,8 +28,11 @@ return function(props: props)
 
 	return container {
 		Name = "Accordion",
-		Size = UDim2.fromScale(1, 0),
-		AutomaticSize = Enum.AutomaticSize.Y,
+		Size = spring(function()
+			if props.expanded() == false then return UDim2.new(1, 0, 0, 32) end
+			return UDim2.new(1, 0, 0, 40 + container_size().Y)
+		end, 0.1),
+		ClipsDescendants = true,
 
 		create "ImageButton" {
 			Name = "Accordion",
@@ -95,13 +98,9 @@ return function(props: props)
 
 			Position = UDim2.fromOffset(0, 40),
 			AutomaticSize = Enum.AutomaticSize.None,
-			Size = spring(
-				function()
-					if not props.expanded() then return UDim2.new(1, 0) end
-					return UDim2.new(1, 0, 0, container_size().Y)
-				end,
-				0.1
-			),
+			Size = function()
+				return UDim2.new(1, 0, 0, container_size().Y)
+			end,
 			BackgroundColor3 = theme.bg[3],
 
 			ClipsDescendants = true,
